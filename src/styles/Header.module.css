@@ -1,8 +1,8 @@
 .header {
   align-items: center;
-  background: #24292f;
+  background: #bb9469;
   display: flex;
-  color: white;
+  color: black;
   padding: 20px;
   gap: 30px;
   font-family: "Gafata", sans-serif;
@@ -10,17 +10,17 @@
 }
 
 .header__links {
-  color: white;
+  color: black;
   text-decoration: none;
 }
 
 .header__links:visited {
-  color: white;
+  color: black;
   text-decoration: none;
 }
 
 .header__links:hover {
-  color: white;
+  color: gray;
   text-decoration: underline;
 }
 
