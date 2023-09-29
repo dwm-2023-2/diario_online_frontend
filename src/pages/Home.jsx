@@ -2,6 +2,7 @@ import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (
@@ -9,6 +10,7 @@ export const Home = () => {
       <Header></Header>
       <Section>
         <Typography>Home</Typography>
+        <Link to="/login">Login</Link>
       </Section>
       <Footer></Footer>
     </div>

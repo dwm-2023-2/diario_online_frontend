@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "../styles/Menu.module.css";
 import { Button } from "@mui/material";
 
-export const Menu = () => {
+export const MenuButtons = () => {
   return (
     <nav className={styles.menu}>
       <ul className={styles.menu__list_user}>
