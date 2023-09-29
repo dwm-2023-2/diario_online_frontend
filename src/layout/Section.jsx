@@ -1,3 +1,3 @@
-export const Section = () => {
-  return <h1>Section</h1>;
+export const Section = ({ children }) => {
+  return <>{children}</>;
 };
