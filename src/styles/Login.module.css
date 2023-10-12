@@ -8,7 +8,7 @@
 
 .forms_box {
   padding: 40px;
-  margin: 20px;
+  margin: 5px;
   background-color: #fffdd0;
   border-radius: 10px;
   display: flex;
@@ -22,6 +22,26 @@
 /* .forms_box_forms {
   padding: 20px;
 } */
+
+.links {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.links a {
+  padding-top: 3px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.links a:hover{
+  color: gray;
+  text-decoration: none;
+}
+
 
 @media screen and (max-width: 768px) {
   .section {

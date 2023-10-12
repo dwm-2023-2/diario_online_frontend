@@ -1,4 +1,4 @@
-import { Header } from "../layout/Header";
+import { HeaderLogin } from "../layout/HeaderLogin";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,11 +37,13 @@ export const Login = () => {
   };
 
   return (
-    <div>
-      <Header></Header>
+    <div style={{ marginTop: 80 }}>
+      <HeaderLogin></HeaderLogin>
       <Section>
         <div className={styles.section}>
-          <Typography variant="h2">Login</Typography>
+          <Typography sx={{ color: "white" }} variant="h6">
+            Login to your account
+          </Typography>
           <div className={styles.forms_box}>
             <TextField
               id="outlined-basic"
@@ -56,21 +58,32 @@ export const Login = () => {
               helperText={!isValidEmail ? "Email inválido" : ""}
               error={!isValidEmail}
             />
-            <TextField
-              id="outlined-basic"
-              label="Password"
-              type="password"
-              variant="outlined"
-              size="medium"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              fullWidth
-            />
-            <Link to="/forgetpassword">
-              <Typography variant="body1">FORGOT THE PASSWORD?</Typography>
-            </Link>
+            <div style={{ width: "100%" }}>
+              <TextField
+                id="outlined-basic"
+                label="Password"
+                type="password"
+                variant="outlined"
+                size="medium"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                fullWidth
+              />
+              <div className={styles.links}>
+                <Link to="/forgetpassword">
+                  <Typography sx={{ fontWeight: "bold" }} variant="body1">
+                    FORGOT THE PASSWORD?
+                  </Typography>
+                </Link>
+                <Link to="/signup">
+                  <Typography sx={{ fontWeight: "bold" }} variant="body1">
+                    CREATE ACCOUNT
+                  </Typography>
+                </Link>
+              </div>
+            </div>
 
             {password && !isValidEmail ? (
               <Button
