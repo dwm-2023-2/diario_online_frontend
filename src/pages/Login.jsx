@@ -1,4 +1,4 @@
-import { Header } from "../layout/Header";
+import { HeaderLogin } from "../layout/HeaderLogin";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,11 +37,13 @@ export const Login = () => {
   };
 
   return (
-    <div>
-      <Header></Header>
+    <div style={{ marginTop: 80 }}>
+      <HeaderLogin></HeaderLogin>
       <Section>
         <div className={styles.section}>
-          <Typography variant="h2">Login</Typography>
+          <Typography sx={{ color: "white" }} variant="h6">
+            Login to your account
+          </Typography>
           <div className={styles.forms_box}>
             <TextField
               id="outlined-basic"
