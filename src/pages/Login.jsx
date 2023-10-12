@@ -58,21 +58,32 @@ export const Login = () => {
               helperText={!isValidEmail ? "Email inválido" : ""}
               error={!isValidEmail}
             />
-            <TextField
-              id="outlined-basic"
-              label="Password"
-              type="password"
-              variant="outlined"
-              size="medium"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              fullWidth
-            />
-            <Link to="/forgetpassword">
-              <Typography variant="body1">FORGOT THE PASSWORD?</Typography>
-            </Link>
+            <div style={{ width: "100%" }}>
+              <TextField
+                id="outlined-basic"
+                label="Password"
+                type="password"
+                variant="outlined"
+                size="medium"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                fullWidth
+              />
+              <div className={styles.links}>
+                <Link to="/forgetpassword">
+                  <Typography sx={{ fontWeight: "bold" }} variant="body1">
+                    FORGOT THE PASSWORD?
+                  </Typography>
+                </Link>
+                <Link to="/signup">
+                  <Typography sx={{ fontWeight: "bold" }} variant="body1">
+                    CREATE ACCOUNT
+                  </Typography>
+                </Link>
+              </div>
+            </div>
 
             {password && !isValidEmail ? (
               <Button

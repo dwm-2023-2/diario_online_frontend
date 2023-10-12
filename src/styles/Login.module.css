@@ -23,6 +23,26 @@
   padding: 20px;
 } */
 
+.links {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.links a {
+  padding-top: 3px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.links a:hover{
+  color: gray;
+  text-decoration: none;
+}
+
+
 @media screen and (max-width: 768px) {
   .section {
     /* background-color: yellow; */
