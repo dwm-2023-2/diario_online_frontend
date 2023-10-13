@@ -10,17 +10,17 @@
 }
 
 .header__links {
-  color: black;
+  color: rgb(255, 255, 255);
   text-decoration: none;
 }
 
 .header__links:visited {
-  color: black;
+  color: rgb(255, 255, 255);
   text-decoration: none;
 }
 
 .header__links:hover {
-  color: white;
+  color: gray;
 }
 
 .menu {
