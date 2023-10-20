@@ -12,6 +12,7 @@ export const Home = () => {
         <Typography>Home</Typography>
         <Link to="/login">Login</Link>
         <Link to="/create-diary">Create a Diary</Link>
+        <Link to="/create-note">Create a Note</Link>
       </Section>
       <Footer></Footer>
     </div>
