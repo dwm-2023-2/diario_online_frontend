@@ -22,22 +22,12 @@ export const Login = () => {
   };
 
   const submitLogin = () => {
-    if (email !== "santos.erick@mail.uft.edu.br") {
-      console.log("Incorrect email");
-    } else {
-      if (password !== "senhaparateste123@") {
-        console.log("Senha incorreta.");
-      } else {
-        console.log("Usuário logado com sucesso!.");
-        setEmail("");
-        setPassword("");
-        handleClick();
-      }
-    }
+    console.log(email);
+    console.log(password);
   };
 
   return (
-    <div style={{ marginTop: 80 }}>
+    <div style={{ marginTop: 50 }}>
       <HeaderLogin></HeaderLogin>
       <Section>
         <div className={styles.section}>
@@ -73,12 +63,18 @@ export const Login = () => {
               />
               <div className={styles.links}>
                 <Link to="/forgetpassword">
-                  <Typography sx={{ fontWeight: "bold" }} variant="body1">
+                  <Typography
+                    sx={{ fontWeight: "bold", fontSize: 10 }}
+                    variant="body1"
+                  >
                     FORGOT THE PASSWORD?
                   </Typography>
                 </Link>
                 <Link to="/signup">
-                  <Typography sx={{ fontWeight: "bold" }} variant="body1">
+                  <Typography
+                    sx={{ fontWeight: "bold", fontSize: 10 }}
+                    variant="body1"
+                  >
                     CREATE ACCOUNT
                   </Typography>
                 </Link>
