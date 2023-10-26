@@ -21,16 +21,12 @@ import { useRef, useState } from "react";
 export const CreateANote = () => {
   const title = useRef({});
   const content = useRef({});
+  const [status, setStatus] = useState("Privado");
+  const [value, setValue] = useState("");
   const [isValidFields, setIsValidFields] = useState(false);
 
-  const [status, setStatus] = useState("Privado");
-
-  const [value, setValue] = useState("");
-
   const theme = useTheme();
-
   const navigate = useNavigate();
-  const handleClick = () => navigate("/");
 
   const handleTitleChange = (event) => {
     title.current.value = event.target.value;
@@ -49,7 +45,7 @@ export const CreateANote = () => {
 
   const validateFields = () => {
     const isTitleValid = title.current.value.trim() !== "";
-    const isContentValid = content.current.value.trim() !== "";
+    const isContentValid = value.trim() !== "";
     const isStatusValid = status.trim() !== "";
     setIsValidFields(isTitleValid && isContentValid && isStatusValid);
   };
@@ -59,17 +55,10 @@ export const CreateANote = () => {
     const payload = {
       title: title.current.value,
       content: content.current.value,
-      status: status,
+      status,
     };
     console.log(payload);
   };
-
-  const payload = {
-    title: title.current.value,
-    content: value,
-    status: status,
-  };
-  console.log(payload);
 
   return (
     <div>
@@ -117,27 +106,13 @@ export const CreateANote = () => {
                 <MenuItem value={"Compartilhado"}>Shared</MenuItem>
               </Select>
             </FormControl>
-
-            {isValidFields ? (
-              <Button
-                onClick={(ev) => {
-                  submit(ev);
-                }}
-                variant="contained"
-              >
-                Create
-              </Button>
-            ) : (
-              <Button
-                onClick={(ev) => {
-                  submit(ev);
-                }}
-                variant="contained"
-                disabled
-              >
-                Create
-              </Button>
-            )}
+            <Button
+              onClick={submit}
+              variant="contained"
+              disabled={!isValidFields}
+            >
+              Create
+            </Button>
           </div>
         </div>
       </Section>
