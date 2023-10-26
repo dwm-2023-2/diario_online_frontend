@@ -27,11 +27,6 @@ export const CreateANote = () => {
 
   const [value, setValue] = useState("");
 
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-    validateFields();
-  };
-
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -44,6 +39,11 @@ export const CreateANote = () => {
 
   const handleContentChange = (content) => {
     setValue(content);
+    validateFields();
+  };
+
+  const handleChange = (event) => {
+    setStatus(event.target.value);
     validateFields();
   };
 
@@ -102,7 +102,6 @@ export const CreateANote = () => {
               value={value}
               onChange={handleContentChange}
             />
-
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select

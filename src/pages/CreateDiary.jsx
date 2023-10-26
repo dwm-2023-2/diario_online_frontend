@@ -2,6 +2,7 @@ import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api";
 import {
   Typography,
   TextField,
@@ -56,6 +57,17 @@ export const CreateDiary = () => {
       description: description.current.value,
       status: status,
     };
+    api
+      .post("/notes/note", {
+        diarioNome: title.current.value,
+        diarioDescricao: description.current.value,
+        privacidade: status,
+        userId: 1,
+      })
+      .then((response) => navigate("/"))
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
     console.log(payload);
   };
 
