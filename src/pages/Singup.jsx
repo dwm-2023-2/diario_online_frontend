@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Typography, TextField, Button } from "@mui/material";
 import styles from "../styles/Signup.module.css";
 import { useState } from "react";
+import api from "../services/api";
 
 export const Signup = () => {
   const [name, setName] = useState("");
@@ -43,16 +44,23 @@ export const Signup = () => {
     setConfirmPassword(inputConfirmPassword);
   };
 
-  const submitLogin = () => {
+  const submitSignup = () => {
     if (
       isValidName &&
       isValidEmail &&
       isValidPassword &&
       isValidConfirmPassword
     ) {
-      console.log(name);
-      console.log(email);
-      console.log(password);
+      api
+        .post("/users/signup", {
+          userName: name,
+          email: email,
+          password: password,
+        })
+        .then((response) => navigate("/login"))
+        .catch((err) => {
+          console.error("ops! ocorreu um erro" + err);
+        });
     } else {
       console.log("Preencha todos os campos corretamente.");
     }
@@ -69,7 +77,7 @@ export const Signup = () => {
           <div className={styles.forms_box}>
             <TextField
               id="outlined-basic"
-              label="Name"
+              label="Username"
               variant="outlined"
               size="small"
               fullWidth
@@ -133,7 +141,7 @@ export const Signup = () => {
             <div className={styles.buttons}>
               <Button
                 onClick={() => {
-                  submitLogin();
+                  submitSignup();
                 }}
                 variant="contained"
                 disabled={
