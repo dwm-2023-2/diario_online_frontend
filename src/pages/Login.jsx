@@ -5,11 +5,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { Typography, TextField, Button } from "@mui/material";
 import styles from "../styles/Login.module.css";
 import { useState } from "react";
+import api from "../services/api";
+import { userStore } from "../stores/userState";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [user, setUser] = useState({});
+
+  const userState = userStore((state) => state.userLogged);
+  const setUserState = userStore((state) => state.setUserState);
 
   const navigate = useNavigate();
   const handleClick = () => navigate("/");
@@ -21,9 +27,21 @@ export const Login = () => {
     setEmail(inputEmail);
   };
 
+  const handleLogin = (response) => {
+    navigate("/");
+    setUser(response);
+  };
+
   const submitLogin = () => {
-    console.log(email);
-    console.log(password);
+    api
+      .post("/users/login", {
+        userName: email,
+        password: password,
+      })
+      .then((response) => handleLogin(response.data))
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
   };
 
   return (

@@ -8,13 +8,22 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { userStore } from "../stores/userState";
 
 export const Home = () => {
   const [notes, setNotes] = useState([]);
+  const [isNotesEmpty, setIsNotesEmpty] = useState(false);
+
+  const userState = userStore((state) => state.userLogged);
+  const setUserState = userStore((state) => state.setUserState);
+
   useEffect(() => {
     api
-      .get("/notes/notes")
-      .then((response) => setNotes(response.data))
+      .get("/diarios/diarios")
+      .then((response) => {
+        setNotes(response.data);
+        setIsNotesEmpty(response.data.length === 0);
+      })
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
@@ -26,9 +35,26 @@ export const Home = () => {
     right: "20px",
   };
 
-  return (
-    <div>
-      <Header></Header>
+  let content;
+
+  if (userState === false) {
+    content = (
+      <Section>
+        <Typography sx={{ color: "white", textAlign: "center" }} variant="h1">
+          User not logged
+        </Typography>
+      </Section>
+    );
+  } else if (isNotesEmpty) {
+    content = (
+      <Section>
+        <Typography sx={{ color: "white", textAlign: "center" }} variant="h3">
+          Empty list. Create a Diary below
+        </Typography>
+      </Section>
+    );
+  } else {
+    content = (
       <Section>
         {notes.map((elements, index) => (
           <div key={index} style={{ backgroundColor: "#FFFDD0" }}>
@@ -44,6 +70,13 @@ export const Home = () => {
           </Fab>
         </Box>
       </Section>
+    );
+  }
+
+  return (
+    <div>
+      <Header></Header>
+      {content}
       <Footer></Footer>
     </div>
   );
