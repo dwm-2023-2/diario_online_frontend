@@ -51,6 +51,13 @@ export const Home = () => {
         <Typography sx={{ color: "white", textAlign: "center" }} variant="h3">
           Empty list. Create a Diary below
         </Typography>
+        <Box sx={{ "& > :not(style)": { m: 1 } }}>
+          <Fab color="primary" aria-label="add" style={buttonStyle}>
+            <Link to="/create-diary">
+              <AddIcon />
+            </Link>
+          </Fab>
+        </Box>
       </Section>
     );
   } else {
@@ -59,6 +66,7 @@ export const Home = () => {
         {notes.map((elements, index) => (
           <div key={index} style={{ backgroundColor: "#FFFDD0" }}>
             <p>Nome: {elements?.diarioNome}</p>
+            <p>Owner's ID: {elements?.userId}</p>
             <p>Data: {elements?.createdAt}</p>
           </div>
         ))}
