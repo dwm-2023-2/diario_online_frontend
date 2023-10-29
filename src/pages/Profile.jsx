@@ -1,20 +1,20 @@
 import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
-import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useState } from "react";
-import api from "../services/api";
-import { userStore } from "../stores/userState";
+import { userInfoStore } from "../stores/userInfo";
 
-export const Home = () => {
+export const Profile = () => {
+  const userInfoState = userInfoStore((state) => state.userInfo);
+
   return (
     <div>
       <Header></Header>
-      <Section>Profile</Section>
+      <Section>
+        {" "}
+        <p>User Name: {userInfoState.userName}</p>
+        <p>User ID: {userInfoState.id}</p>
+        <p>Email: {userInfoState.email}</p>
+      </Section>
       <Footer></Footer>
     </div>
   );
