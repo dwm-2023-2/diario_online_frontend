@@ -3,6 +3,7 @@ import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { userInfoStore } from "../stores/userInfo";
 import {
   Typography,
   TextField,
@@ -20,6 +21,7 @@ export const CreateDiary = () => {
   const title = useRef({});
   const description = useRef({});
   const [isValidFields, setIsValidFields] = useState(false);
+  const userInfoState = userInfoStore((state) => state.userInfo);
 
   const [status, setStatus] = useState("Privado");
 
@@ -58,11 +60,11 @@ export const CreateDiary = () => {
       status: status,
     };
     api
-      .post("/notes/note", {
+      .post("/diarios/diario", {
         diarioNome: title.current.value,
         diarioDescricao: description.current.value,
         privacidade: status,
-        userId: 1,
+        userId: userInfoState.id,
       })
       .then((response) => navigate("/"))
       .catch((err) => {

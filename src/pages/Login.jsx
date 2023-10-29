@@ -7,19 +7,20 @@ import styles from "../styles/Login.module.css";
 import { useState } from "react";
 import api from "../services/api";
 import { userStore } from "../stores/userState";
+import { userInfoStore } from "../stores/userInfo";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [user, setUser] = useState({});
 
   const userState = userStore((state) => state.userLogged);
   const setUserState = userStore((state) => state.setUserState);
+  const userInfoState = userInfoStore((state) => state.userInfo);
+  const setUserInfoState = userInfoStore((state) => state.setUserInfo);
 
   const navigate = useNavigate();
-  const handleClick = () => navigate("/");
-
+  console.log(userInfoState);
   const validateEmail = (inputEmail) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const isValid = emailRegex.test(inputEmail);
@@ -29,13 +30,16 @@ export const Login = () => {
 
   const handleLogin = (response) => {
     navigate("/");
-    setUser(response);
+    setUserState();
+    setUserInfoState(response);
+    console.log(response);
+    console.log(userInfoState);
   };
 
   const submitLogin = () => {
     api
       .post("/users/login", {
-        userName: email,
+        email: email,
         password: password,
       })
       .then((response) => handleLogin(response.data))
