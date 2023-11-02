@@ -49,7 +49,11 @@ export const Home = () => {
             marginTop: "120px",
           }}
         >
-          <img src="src/assets/image1.png" alt="note2note logo" />
+          <img
+            src="src/assets/image1.png"
+            alt="note2note logo"
+            style={{ marginBottom: "20px" }}
+          />
           <Typography sx={{ color: "white", textAlign: "center" }} variant="h2">
             Create a free online diary in minutes.
           </Typography>
