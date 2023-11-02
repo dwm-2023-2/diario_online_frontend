@@ -71,8 +71,8 @@ export const Signup = () => {
       <HeaderLogin></HeaderLogin>
       <Section>
         <div className={styles.section}>
-          <Typography sx={{ color: "white" }} variant="h6">
-            Login to your account
+          <Typography sx={{ color: "white" }} variant="h5">
+            Create your Account
           </Typography>
           <div className={styles.forms_box}>
             <TextField
