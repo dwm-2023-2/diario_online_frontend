@@ -46,6 +46,7 @@ export const Home = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            marginTop: "120px",
           }}
         >
           <img src="src/assets/image1.png" alt="note2note logo" />
@@ -63,7 +64,7 @@ export const Home = () => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            sx={{ mt: 2 }}
+            sx={{ mt: 3 }}
           >
             <Button
               variant="contained"
