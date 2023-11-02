@@ -1,10 +1,11 @@
-import { Header } from "../layout/Header";
+import { Header } from "../layout/HeaderHomeNotLogin";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
+import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import api from "../services/api";
@@ -40,9 +41,54 @@ export const Home = () => {
   if (userState === false) {
     content = (
       <Section>
-        <Typography sx={{ color: "white", textAlign: "center" }} variant="h1">
-          User not logged
-        </Typography>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "120px",
+          }}
+        >
+          <img
+            src="src/assets/image1.png"
+            alt="note2note logo"
+            style={{ marginBottom: "20px" }}
+          />
+          <Typography sx={{ color: "white", textAlign: "center" }} variant="h2">
+            Create a free online diary in minutes.
+          </Typography>
+          <Typography
+            sx={{ color: "white", textAlign: "center", mt: 2 }}
+            variant="h5"
+          >
+            Note2Note is your personal space to record thoughts, feelings and
+            experiences.
+          </Typography>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ mt: 3 }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to="/login"
+            >
+              Login
+            </Button>
+            <Box sx={{ width: 16 }} />
+            <Button
+              variant="contained"
+              color="secondary"
+              component={Link}
+              to="/signup"
+            >
+              Create Account
+            </Button>
+          </Box>
+        </div>
       </Section>
     );
   } else if (isNotesEmpty) {
@@ -60,27 +106,7 @@ export const Home = () => {
         </Box>
       </Section>
     );
-  } else {
-    content = (
-      <Section>
-        {notes.map((elements, index) => (
-          <div key={index} style={{ backgroundColor: "#FFFDD0" }}>
-            <p>Nome: {elements?.diarioNome}</p>
-            <p>Owner's ID: {elements?.userId}</p>
-            <p>Data: {elements?.createdAt}</p>
-          </div>
-        ))}
-        <Box sx={{ "& > :not(style)": { m: 1 } }}>
-          <Fab color="primary" aria-label="add" style={buttonStyle}>
-            <Link to="/create-diary">
-              <AddIcon />
-            </Link>
-          </Fab>
-        </Box>
-      </Section>
-    );
   }
-
   return (
     <div>
       <Header></Header>
