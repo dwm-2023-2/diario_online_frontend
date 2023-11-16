@@ -46,8 +46,11 @@ export const CreateDiary = () => {
   };
 
   const validateFields = () => {
-    const isTitleValid = title.current.value.trim() !== "";
-    const isDescriptionValid = description.current.value.trim() !== "";
+    const _title = title.current.value??"";
+    const _description = description.current.value??"";
+
+    const isTitleValid = _title.trim() !== "";
+    const isDescriptionValid = _description.trim() !== "";
     const isStatusValid = status.trim() !== "";
     setIsValidFields(isTitleValid && isDescriptionValid && isStatusValid);
   };
