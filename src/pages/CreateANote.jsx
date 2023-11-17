@@ -3,8 +3,10 @@ import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Link, useNavigate } from "react-router-dom";
+import { userInfoStore } from "../stores/userInfo";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import api from "../services/api";
 import {
   Typography,
   TextField,
@@ -17,6 +19,7 @@ import {
 } from "@mui/material";
 import styles from "../styles/CreateANote.module.css";
 import { useRef, useState } from "react";
+import { diarioStore } from "../stores/diarioStore";
 
 export const CreateANote = () => {
   const title = useRef({});
@@ -24,6 +27,8 @@ export const CreateANote = () => {
   const [status, setStatus] = useState("Privado");
   const [value, setValue] = useState("");
   const [isValidFields, setIsValidFields] = useState(false);
+  const userInfoState = userInfoStore((state) => state.userInfo);
+  const diarioId = diarioStore((state) => state.diarioId);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -54,9 +59,23 @@ export const CreateANote = () => {
     ev.preventDefault();
     const payload = {
       title: title.current.value,
-      content: content.current.value,
+      content: value,
       status,
     };
+
+    api
+      .post("/diarios/diario", {
+        tituloRegistro: title.current.value,
+        conteudoRegistro: content.current.value,
+        privacidade: status,
+        userId: userInfoState.id,
+        diarioAssociadoID: diarioId,
+      })
+      .then((response) => {})
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
+    navigate(`/diary/${diarioId}`);
     console.log(payload);
   };
 
