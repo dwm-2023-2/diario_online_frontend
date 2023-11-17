@@ -6,6 +6,7 @@ import { Login } from "./pages/Login";
 import { CreateDiary } from "./pages/CreateDiary";
 import { CreateANote } from "./pages/CreateANote";
 import { Profile } from "./pages/Profile";
+import { DiaryPage } from "./pages/DiaryPage";
 import "./index.css";
 
 const container = document.getElementById("root");
@@ -19,6 +20,7 @@ root.render(
       <Route exact path="/signup" element={<Signup />} />
       <Route exact path="/profile" element={<Profile />} />
       <Route exact path="/create-diary" element={<CreateDiary />} />
+      <Route exact path="/diary/:param1" element={<DiaryPage />} />
       <Route exact path="/create-note" element={<CreateANote />} />
     </Routes>
   </Router>
