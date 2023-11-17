@@ -11,14 +11,20 @@ import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { userStore } from "../stores/userState";
+import { userInfoStore } from "../stores/userInfo";
 import { format } from "date-fns";
+import { diarioStore } from "../stores/diarioStore";
 
 export const Home = () => {
   const [notes, setNotes] = useState([]);
   const [isNotesEmpty, setIsNotesEmpty] = useState(false);
 
   const userState = userStore((state) => state.userLogged);
+  const userInfo = userInfoStore((state) => state.userInfo);
   const setUserState = userStore((state) => state.setUserState);
+  const diarioId = diarioStore((state) => state.diarioId);
+  const setDiarioId = diarioStore((state) => state.setDiarioId);
+
   const navigate = useNavigate();
   useEffect(() => {
     api
@@ -38,6 +44,7 @@ export const Home = () => {
   };
 
   const navigateWithParams = (param1) => {
+    setDiarioId(param1);
     navigate(`/diary/${param1}`);
   };
 
@@ -74,7 +81,8 @@ export const Home = () => {
   };
 
   let content;
-
+  console.log(userInfo);
+  console.log(userInfo.id);
   if (userState === false) {
     content = (
       <Section>

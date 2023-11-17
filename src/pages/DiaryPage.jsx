@@ -7,13 +7,15 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import { diarioStore } from "../stores/diarioStore";
 
 export const DiaryPage = () => {
   const { param1 } = useParams();
   const [diario, setDiario] = useState(null);
+  const diarioId = diarioStore((state) => state.diarioId);
+  const setDiarioId = diarioStore((state) => state.setDiarioId);
 
   const buttonStyle = {
     position: "fixed",
@@ -65,20 +67,15 @@ export const DiaryPage = () => {
     const date = new Date(dateString);
     return format(date, "yyyy-MM-dd");
   };
-
+  console.log("Diario ID:");
+  console.log(diarioId);
   return (
     <div>
       <Header></Header>
       <Section>
         <div style={diarios}>
           {diario && (
-            <div
-              key={diario.diarioTitulo}
-              style={diarioTitulo}
-              onClick={() => {
-                navigateWithParams(diario?.id);
-              }}
-            >
+            <div key={diario.diarioTitulo} style={diarioTitulo}>
               <p style={diarioTitulo}>
                 <h1>{diario?.diarioNome}</h1>
               </p>
