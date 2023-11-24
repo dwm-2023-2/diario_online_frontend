@@ -1,4 +1,4 @@
-import { Header } from "../layout/HeaderHomeNotLogin";
+import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Typography } from "@mui/material";
@@ -27,7 +27,6 @@ export const Home = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-
     const userID = userInfo.id;
 
     api
