@@ -27,8 +27,11 @@ export const Home = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
+
+    const userID = userInfo.id;
+
     api
-      .get("/diarios/diarios")
+      .get(`diarios/diarios?userId=${userID}`)
       .then((response) => {
         setNotes(response.data);
         setIsNotesEmpty(response.data.length === 0);
@@ -36,7 +39,7 @@ export const Home = () => {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-  }, []);
+  }, [userInfo.id]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
