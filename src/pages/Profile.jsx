@@ -8,6 +8,10 @@ import { Typography, TextField, Button } from "@mui/material";
 export const Profile = () => {
   const userInfoState = userInfoStore((state) => state.userInfo);
 
+  let storageUserId = localStorage.getItem("userId");
+  let storageUsername = localStorage.getItem("username");
+  let storageEmail = localStorage.getItem("email");
+
   const submitSignup = () => {};
 
   return (
@@ -17,9 +21,9 @@ export const Profile = () => {
         <div className={styles.section}>
           <div className={styles.forms_box}>
             <div style={{ width: "100%" }}></div>
-            <p>User Name: {userInfoState.userName}</p>
-            <p>User ID: {userInfoState.id}</p>
-            <p>Email: {userInfoState.email}</p>
+            <p>User Name: {storageUsername}</p>
+            <p>User ID: {storageUserId}</p>
+            <p>Email: {storageEmail}</p>
             <div className={styles.buttons}>
               <Button
                 onClick={() => {
