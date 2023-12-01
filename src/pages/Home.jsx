@@ -20,7 +20,10 @@ export const Home = () => {
   const [isNotesEmpty, setIsNotesEmpty] = useState(false);
 
   const userState = userStore((state) => state.userLogged);
-  localStorage.setItem("isUserLogged", userState);
+
+  if (userState) {
+    localStorage.setItem("isUserLogged", true);
+  }
 
   let storageIsUserLogged = localStorage.getItem("isUserLogged");
   console.log("storageIsUserLogged: ", storageIsUserLogged);
@@ -28,21 +31,25 @@ export const Home = () => {
   let boolStorageIsUserLogged = storageIsUserLogged === "true";
   console.log("boolStorageIsUserLogged: ", boolStorageIsUserLogged);
   const setUserState = userStore((state) => state.setUserState);
+
   if (boolStorageIsUserLogged) {
     setUserState(boolStorageIsUserLogged);
   }
 
   const userInfo = userInfoStore((state) => state.userInfo);
-
   const diarioId = diarioStore((state) => state.diarioId);
   const setDiarioId = diarioStore((state) => state.setDiarioId);
 
+  let storageUserId = localStorage.getItem("userId");
+  let storageUsername = localStorage.getItem("username");
+  let storageEmail = localStorage.getItem("email");
+
   const navigate = useNavigate();
   useEffect(() => {
-    const userID = userInfo.id;
+    let storageUserId = localStorage.getItem("userId");
 
     api
-      .get(`diarios/diarios?userId=${userID}`)
+      .get(`diarios/diarios?userId=${storageUserId}`)
       .then((response) => {
         setNotes(response.data);
         setIsNotesEmpty(response.data.length === 0);
@@ -50,7 +57,7 @@ export const Home = () => {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-  }, [userInfo.id]);
+  }, [storageUserId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -97,14 +104,11 @@ export const Home = () => {
   let content;
   // console.log(userInfo);
   // console.log(userInfo.id);
-  console.log("User State: ", userState);
-  console.log("Local Storage test:");
-  let storageUserId = localStorage.getItem("userId");
-  let storageUsername = localStorage.getItem("username");
-  let storageEmail = localStorage.getItem("email");
-  console.log(storageUserId);
-  console.log(storageUsername);
-  console.log(storageEmail);
+  // console.log("User State: ", userState);
+  // console.log("Local Storage test:");
+  // console.log(storageUserId);
+  // console.log(storageUsername);
+  // console.log(storageEmail);
 
   if (boolStorageIsUserLogged === false) {
     content = (

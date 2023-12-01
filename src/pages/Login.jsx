@@ -35,7 +35,7 @@ export const Login = () => {
     console.log("User State: ", userState);
     console.log(response);
     console.log(userInfoState);
-    localStorage.setItem("isUserLogged", userState);
+    localStorage.setItem("isUserLogged", true);
     localStorage.setItem("userId", response.id);
     localStorage.setItem("username", response.userName);
     localStorage.setItem("email", response.email);
