@@ -62,7 +62,7 @@ export const Signup = () => {
           console.error("ops! ocorreu um erro" + err);
         });
     } else {
-      console.log("Preencha todos os campos corretamente.");
+      // console.log("Preencha todos os campos corretamente.");
     }
   };
 

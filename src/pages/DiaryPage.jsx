@@ -67,8 +67,8 @@ export const DiaryPage = () => {
     const date = new Date(dateString);
     return format(date, "yyyy-MM-dd");
   };
-  console.log("Diario ID:");
-  console.log(diarioId);
+  // console.log("Diario ID:");
+  // console.log(diarioId);
   return (
     <div>
       <Header></Header>

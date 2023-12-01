@@ -46,8 +46,8 @@ export const CreateDiary = () => {
   };
 
   const validateFields = () => {
-    const _title = title.current.value??"";
-    const _description = description.current.value??"";
+    const _title = title.current.value ?? "";
+    const _description = description.current.value ?? "";
 
     const isTitleValid = _title.trim() !== "";
     const isDescriptionValid = _description.trim() !== "";
@@ -73,7 +73,7 @@ export const CreateDiary = () => {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-    console.log(payload);
+    // console.log(payload);
   };
 
   const payload = {
@@ -81,7 +81,7 @@ export const CreateDiary = () => {
     description: description.current.value,
     status: status,
   };
-  console.log(payload);
+  // console.log(payload);
 
   return (
     <div>

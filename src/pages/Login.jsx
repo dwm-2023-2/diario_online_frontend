@@ -20,7 +20,7 @@ export const Login = () => {
   const setUserInfoState = userInfoStore((state) => state.setUserInfo);
 
   const navigate = useNavigate();
-  console.log(userInfoState);
+  // console.log(userInfoState);
   const validateEmail = (inputEmail) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const isValid = emailRegex.test(inputEmail);
@@ -34,6 +34,9 @@ export const Login = () => {
     setUserInfoState(response);
     console.log(response);
     console.log(userInfoState);
+    localStorage.setItem("userId", response.id);
+    localStorage.setItem("username", response.userName);
+    localStorage.setItem("email", response.email);
   };
 
   const submitLogin = () => {

@@ -83,8 +83,17 @@ export const Home = () => {
   };
 
   let content;
-  console.log(userInfo);
-  console.log(userInfo.id);
+  // console.log(userInfo);
+  // console.log(userInfo.id);
+
+  console.log("Local Storage test:");
+  let storageUserId = localStorage.getItem("userId");
+  let storageUsername = localStorage.getItem("username");
+  let storageEmail = localStorage.getItem("email");
+  // console.log(storageUserId);
+  // console.log(storageUsername);
+  // console.log(storageEmail);
+
   if (userState === false) {
     content = (
       <Section>
