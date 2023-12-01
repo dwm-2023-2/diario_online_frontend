@@ -22,14 +22,12 @@ export const Home = () => {
   const userState = userStore((state) => state.userLogged);
 
   if (userState) {
+    console.log("userState: ", userState);
     localStorage.setItem("isUserLogged", true);
   }
 
   let storageIsUserLogged = localStorage.getItem("isUserLogged");
-  console.log("storageIsUserLogged: ", storageIsUserLogged);
-  console.log("storageIsUserLogged type: ", typeof storageIsUserLogged);
   let boolStorageIsUserLogged = storageIsUserLogged === "true";
-  console.log("boolStorageIsUserLogged: ", boolStorageIsUserLogged);
   const setUserState = userStore((state) => state.setUserState);
 
   if (boolStorageIsUserLogged) {
@@ -109,6 +107,8 @@ export const Home = () => {
   // console.log(storageUserId);
   // console.log(storageUsername);
   // console.log(storageEmail);
+
+  console.log("boolStorageIsUserLogged: ", boolStorageIsUserLogged);
 
   if (boolStorageIsUserLogged === false) {
     content = (

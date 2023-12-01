@@ -2,10 +2,27 @@ import { Link } from "react-router-dom";
 import styles from "../styles/Menu.module.css";
 import { Button } from "@mui/material";
 import { userStore } from "../stores/userState";
+import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 export const MenuButtons = () => {
   const userState = userStore((state) => state.userLogged);
   const setuserStore = userStore((state) => state.setUserState);
+  const navigate = useNavigate();
+
+  const submitLogOut = () => {
+    api
+      .get(`/users/logout/`)
+      .then((response) => {
+        navigate("/");
+        setuserStore(false);
+        localStorage.clear();
+      })
+      .catch((error) => {
+        // Trate o erro, se necessário
+        console.error(error);
+      });
+  };
 
   let buttons;
 
@@ -35,7 +52,14 @@ export const MenuButtons = () => {
         </li>
 
         <li className={styles.menu__item}>
-          <Button variant="contained">Log Out</Button>
+          <Button
+            onClick={() => {
+              submitLogOut();
+            }}
+            variant="contained"
+          >
+            Log Out
+          </Button>
         </li>
       </ul>
     );
