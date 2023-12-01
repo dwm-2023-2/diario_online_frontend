@@ -25,6 +25,8 @@ export const CreateDiary = () => {
 
   const [status, setStatus] = useState("Privado");
 
+  let userId = localStorage.getItem("userId");
+
   const handleChange = (event) => {
     setStatus(event.target.value);
     validateFields();
@@ -69,7 +71,7 @@ export const CreateDiary = () => {
         diarioNome: title.current.value,
         diarioDescricao: description.current.value,
         privacidade: status,
-        userId: userInfoState.id,
+        userId: userId,
       })
       .then((response) => navigate("/"))
       .catch((err) => {
