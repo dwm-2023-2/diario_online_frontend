@@ -20,6 +20,14 @@ export const Home = () => {
   const [isNotesEmpty, setIsNotesEmpty] = useState(false);
 
   const userState = userStore((state) => state.userLogged);
+  localStorage.setItem("isUserLogged", userState);
+
+  let storageIsUserLogged = localStorage.getItem("isUserLogged");
+  console.log("storageIsUserLogged: ", storageIsUserLogged);
+  console.log("storageIsUserLogged type: ", typeof storageIsUserLogged);
+  let boolStorageIsUserLogged = storageIsUserLogged === "true";
+  console.log("boolStorageIsUserLogged: ", boolStorageIsUserLogged);
+
   const userInfo = userInfoStore((state) => state.userInfo);
   const setUserState = userStore((state) => state.setUserState);
   const diarioId = diarioStore((state) => state.diarioId);
@@ -85,14 +93,14 @@ export const Home = () => {
   let content;
   // console.log(userInfo);
   // console.log(userInfo.id);
-
+  console.log("User State: ", userState);
   console.log("Local Storage test:");
   let storageUserId = localStorage.getItem("userId");
   let storageUsername = localStorage.getItem("username");
   let storageEmail = localStorage.getItem("email");
-  // console.log(storageUserId);
-  // console.log(storageUsername);
-  // console.log(storageEmail);
+  console.log(storageUserId);
+  console.log(storageUsername);
+  console.log(storageEmail);
 
   if (userState === false) {
     content = (

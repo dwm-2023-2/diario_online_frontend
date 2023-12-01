@@ -29,11 +29,13 @@ export const Login = () => {
   };
 
   const handleLogin = (response) => {
-    navigate("/");
-    setUserState();
+    setUserState(!userState.userLogged);
     setUserInfoState(response);
+    navigate("/");
+    console.log("User State: ", userState);
     console.log(response);
     console.log(userInfoState);
+    localStorage.setItem("isUserLogged", userState);
     localStorage.setItem("userId", response.id);
     localStorage.setItem("username", response.userName);
     localStorage.setItem("email", response.email);
