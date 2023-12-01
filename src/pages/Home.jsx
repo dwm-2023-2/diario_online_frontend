@@ -27,9 +27,13 @@ export const Home = () => {
   console.log("storageIsUserLogged type: ", typeof storageIsUserLogged);
   let boolStorageIsUserLogged = storageIsUserLogged === "true";
   console.log("boolStorageIsUserLogged: ", boolStorageIsUserLogged);
+  const setUserState = userStore((state) => state.setUserState);
+  if (boolStorageIsUserLogged) {
+    setUserState(boolStorageIsUserLogged);
+  }
 
   const userInfo = userInfoStore((state) => state.userInfo);
-  const setUserState = userStore((state) => state.setUserState);
+
   const diarioId = diarioStore((state) => state.diarioId);
   const setDiarioId = diarioStore((state) => state.setDiarioId);
 
@@ -102,7 +106,7 @@ export const Home = () => {
   console.log(storageUsername);
   console.log(storageEmail);
 
-  if (userState === false) {
+  if (boolStorageIsUserLogged === false) {
     content = (
       <Section>
         <div
