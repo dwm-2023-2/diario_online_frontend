@@ -66,9 +66,12 @@ export const Signup = () => {
     }
   };
 
-  return (
-    <div style={{ marginTop: 50 }}>
-      <HeaderLogin></HeaderLogin>
+  let storageIsUserLogged = localStorage.getItem("isUserLogged");
+  let boolStorageIsUserLogged = storageIsUserLogged === "true";
+  let content;
+
+  if (boolStorageIsUserLogged === false) {
+    content = (
       <Section>
         <div className={styles.section}>
           <Typography sx={{ color: "white" }} variant="h5">
@@ -166,6 +169,19 @@ export const Signup = () => {
           </div>
         </div>
       </Section>
+    );
+  } else {
+    content = (
+      <div className={styles.section}>
+        <h2>User is already logged in!</h2>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ marginTop: 50 }}>
+      <HeaderLogin></HeaderLogin>
+      <Section>{content}</Section>
       <Footer></Footer>
     </div>
   );

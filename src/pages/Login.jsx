@@ -53,84 +53,98 @@ export const Login = () => {
       });
   };
 
+  let storageIsUserLogged = localStorage.getItem("isUserLogged");
+  let boolStorageIsUserLogged = storageIsUserLogged === "true";
+  let content;
+
+  if (boolStorageIsUserLogged === false) {
+    content = (
+      <div className={styles.section}>
+        <Typography sx={{ color: "white" }} variant="h6">
+          Login to your account
+        </Typography>
+        <div className={styles.forms_box}>
+          <TextField
+            id="outlined-basic"
+            label="Email"
+            variant="outlined"
+            size="medium"
+            fullWidth
+            value={email}
+            onChange={(e) => {
+              validateEmail(e.target.value);
+            }}
+            helperText={!isValidEmail ? "Email inválido" : ""}
+            error={!isValidEmail}
+          />
+          <div style={{ width: "100%" }}>
+            <TextField
+              id="outlined-basic"
+              label="Password"
+              type="password"
+              variant="outlined"
+              size="medium"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              fullWidth
+            />
+            <div className={styles.links}>
+              <Link to="/forgetpassword">
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: 10 }}
+                  variant="body1"
+                >
+                  FORGOT THE PASSWORD?
+                </Typography>
+              </Link>
+              <Link to="/signup">
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: 10 }}
+                  variant="body1"
+                >
+                  CREATE ACCOUNT
+                </Typography>
+              </Link>
+            </div>
+          </div>
+
+          {password && !isValidEmail ? (
+            <Button
+              onClick={() => {
+                submitLogin();
+              }}
+              variant="contained"
+              disabled
+            >
+              Login
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                submitLogin();
+              }}
+              variant="contained"
+            >
+              Login
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  } else {
+    content = (
+      <div className={styles.section}>
+        <h2>User is already logged in!</h2>
+      </div>
+    );
+  }
+
   return (
     <div style={{ marginTop: 50 }}>
       <HeaderLogin></HeaderLogin>
-      <Section>
-        <div className={styles.section}>
-          <Typography sx={{ color: "white" }} variant="h6">
-            Login to your account
-          </Typography>
-          <div className={styles.forms_box}>
-            <TextField
-              id="outlined-basic"
-              label="Email"
-              variant="outlined"
-              size="medium"
-              fullWidth
-              value={email}
-              onChange={(e) => {
-                validateEmail(e.target.value);
-              }}
-              helperText={!isValidEmail ? "Email inválido" : ""}
-              error={!isValidEmail}
-            />
-            <div style={{ width: "100%" }}>
-              <TextField
-                id="outlined-basic"
-                label="Password"
-                type="password"
-                variant="outlined"
-                size="medium"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                fullWidth
-              />
-              <div className={styles.links}>
-                <Link to="/forgetpassword">
-                  <Typography
-                    sx={{ fontWeight: "bold", fontSize: 10 }}
-                    variant="body1"
-                  >
-                    FORGOT THE PASSWORD?
-                  </Typography>
-                </Link>
-                <Link to="/signup">
-                  <Typography
-                    sx={{ fontWeight: "bold", fontSize: 10 }}
-                    variant="body1"
-                  >
-                    CREATE ACCOUNT
-                  </Typography>
-                </Link>
-              </div>
-            </div>
-
-            {password && !isValidEmail ? (
-              <Button
-                onClick={() => {
-                  submitLogin();
-                }}
-                variant="contained"
-                disabled
-              >
-                Login
-              </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  submitLogin();
-                }}
-                variant="contained"
-              >
-                Login
-              </Button>
-            )}
-          </div>
-        </div>
-      </Section>
+      <Section>{content}</Section>
       <Footer></Footer>
     </div>
   );
