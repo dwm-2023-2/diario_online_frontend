@@ -200,13 +200,13 @@ export const Home = () => {
             </div>
           ))}
         </div>
-        <Box sx={{ "& > :not(style)": { m: 1 } }}>
-          <Fab color="primary" aria-label="add" style={buttonStyle}>
-            <Link to="/create-diary">
+        <Link to="/create-diary">
+          <Box sx={{ "& > :not(style)": { m: 1 } }}>
+            <Fab color="primary" aria-label="add" style={buttonStyle}>
               <AddIcon />
-            </Link>
-          </Fab>
-        </Box>
+            </Fab>
+          </Box>
+        </Link>
       </Section>
     );
   }

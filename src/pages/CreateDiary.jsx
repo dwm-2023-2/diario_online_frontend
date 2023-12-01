@@ -55,6 +55,8 @@ export const CreateDiary = () => {
     setIsValidFields(isTitleValid && isDescriptionValid && isStatusValid);
   };
 
+  console.log(userInfoState);
+
   const submit = (ev) => {
     ev.preventDefault();
     const payload = {
