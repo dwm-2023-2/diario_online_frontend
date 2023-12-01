@@ -49,7 +49,8 @@ export const Signup = () => {
       isValidName &&
       isValidEmail &&
       isValidPassword &&
-      isValidConfirmPassword
+      isValidConfirmPassword &&
+      password.trim() !== ""
     ) {
       api
         .post("/users/signup", {
@@ -152,6 +153,7 @@ export const Signup = () => {
                   !isValidEmail ||
                   !isValidPassword ||
                   !isValidConfirmPassword
+
                 }
               >
                 Create
