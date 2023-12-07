@@ -59,7 +59,7 @@ export const Home = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return format(date, "yyyy-MM-dd");
+    return format(date, "dd/MM/yyyy");
   };
 
   const navigateWithParams = (param1) => {
@@ -87,7 +87,7 @@ export const Home = () => {
     padding: "10px",
     borderRadius: "10px",
     cursor: "pointer",
-    width: "1000px",
+    width: "500px",
   };
 
   const diarioTitulo = {
