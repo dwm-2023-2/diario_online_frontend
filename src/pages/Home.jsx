@@ -83,17 +83,17 @@ export const Home = () => {
   };
 
   const diario = {
-    backgroundColor: "#FFFDD0",
+    backgroundColor: "#6495ED",
     padding: "10px",
-    border: "solid 1px",
     borderRadius: "10px",
     cursor: "pointer",
-    width: "200px",
+    width: "1000px",
   };
 
   const diarioTitulo = {
     fontSize: "14px",
     fontFamily: "Arial",
+    color: "white",
     fontWeight: "bold",
     textAlign: "center",
     padding: "5px",
@@ -181,6 +181,22 @@ export const Home = () => {
   } else {
     content = (
       <Section>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src="src/assets/image1.png"
+            alt="note2note logo"
+            style={{ marginBottom: "10px" }}
+          />
+          <Typography sx={{ color: "white", textAlign: "center" }} variant="h3">
+            Your Diaries
+          </Typography>
+        </div>
         <div style={diarios}>
           {notes.map((elements, index) => (
             <div
@@ -194,7 +210,7 @@ export const Home = () => {
               <p style={{ textAlign: "center", color: "gray" }}>
                 {elements?.diarioDescricao}
               </p>
-              <p style={{ textAlign: "center" }}>
+              <p style={{ textAlign: "center", color: "gray" }}>
                 {formatDate(elements?.createdAt)}
               </p>
             </div>
