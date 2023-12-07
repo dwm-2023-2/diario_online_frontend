@@ -83,7 +83,7 @@ export const Home = () => {
   };
 
   const diario = {
-    backgroundColor: "#6495ED",
+    backgroundColor: "#1976D2",
     padding: "10px",
     borderRadius: "10px",
     cursor: "pointer",
@@ -91,7 +91,7 @@ export const Home = () => {
   };
 
   const diarioTitulo = {
-    fontSize: "14px",
+    fontSize: "20px",
     fontFamily: "Arial",
     color: "white",
     fontWeight: "bold",
@@ -207,10 +207,22 @@ export const Home = () => {
               }}
             >
               <p style={diarioTitulo}>{elements?.diarioNome}</p>
-              <p style={{ textAlign: "center", color: "gray" }}>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Arial",
+                  color: "white",
+                }}
+              >
                 {elements?.diarioDescricao}
               </p>
-              <p style={{ textAlign: "center", color: "gray" }}>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Arial",
+                  color: "white",
+                }}
+              >
                 {formatDate(elements?.createdAt)}
               </p>
             </div>
