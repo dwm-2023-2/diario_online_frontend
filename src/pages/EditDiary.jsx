@@ -88,7 +88,7 @@ export const CreateDiary = () => {
             }}
             variant="h2"
           >
-            Create a Diary
+            Edit the diary
           </Typography>
           <div className={styles.forms_box}>
             <TextField
