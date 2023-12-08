@@ -96,34 +96,38 @@ export const CreateANote = () => {
             Create a Note
           </Typography>
           <div className={styles.forms_box}>
-            <TextField
-              id="title"
-              label="Title"
-              variant="outlined"
-              size="medium"
-              fullWidth
-              onChange={handleTitleChange}
-            />
+            <div className={styles.forms_box__row}>
+              <TextField
+                id="title"
+                label="Title"
+                variant="outlined"
+                size="medium"
+                fullWidth
+                onChange={handleTitleChange}
+              />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={status}
+                  label="Status"
+                  fullWidth
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"Público"}>Public</MenuItem>
+                  <MenuItem value={"Privado"}>Private</MenuItem>
+                  <MenuItem value={"Compartilhado"}>Shared</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
             <ReactQuill
+              image={true}
+              className={styles.react_quill}
               theme="snow"
               value={value}
               onChange={handleContentChange}
             />
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={status}
-                label="Status"
-                fullWidth
-                onChange={handleChange}
-              >
-                <MenuItem value={"Público"}>Public</MenuItem>
-                <MenuItem value={"Privado"}>Private</MenuItem>
-                <MenuItem value={"Compartilhado"}>Shared</MenuItem>
-              </Select>
-            </FormControl>
             <Button
               onClick={submit}
               variant="contained"
