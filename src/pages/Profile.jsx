@@ -2,17 +2,36 @@ import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { userInfoStore } from "../stores/userInfo";
+import api from "../services/api";
 import styles from "../styles/Profile.module.css";
+import { useNavigate } from "react-router-dom";
 import { Typography, TextField, Button } from "@mui/material";
 
 export const Profile = () => {
   const userInfoState = userInfoStore((state) => state.userInfo);
+  const navigate = useNavigate();
 
   let storageUserId = localStorage.getItem("userId");
   let storageUsername = localStorage.getItem("username");
   let storageEmail = localStorage.getItem("email");
 
-  const submitSignup = () => {};
+  const submitDelete = () => {
+    const shouldDelete = window.confirm(
+      "Are you sure want to delete your account?"
+    );
+    if (shouldDelete) {
+      api
+        .delete(`/users/${storageUserId}`)
+        .then((response) => {
+          console.log(response);
+          navigate("/");
+          localStorage.clear();
+        })
+        .catch((err) => {
+          console.error("ops! ocorreu um erro" + err);
+        });
+    }
+  };
 
   return (
     <div>
@@ -27,19 +46,11 @@ export const Profile = () => {
             <div className={styles.buttons}>
               <Button
                 onClick={() => {
-                  navigate("/editprofile");
-                }}
-                variant="contained"
-              >
-                Login
-              </Button>
-              <Button
-                onClick={() => {
                   submitDelete();
                 }}
                 variant="contained"
               >
-                Create
+                Deletar usuario
               </Button>
             </div>
           </div>
