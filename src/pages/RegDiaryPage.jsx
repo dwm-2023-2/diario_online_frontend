@@ -60,6 +60,10 @@ export const RegDiaryPage = () => {
     return format(date, "yyyy-MM-dd");
   };
 
+  const navigateToEdit = (regDiaryId) => {
+    navigate(`/edit_reg_diary/${regDiaryId}`);
+  };
+
   return (
     <div>
       <Header></Header>
@@ -85,7 +89,12 @@ export const RegDiaryPage = () => {
             </div>
           )}
         </div>
-        <Box sx={{ "& > :not(style)": { m: 1 } }}>
+        <Box
+          onClick={() => {
+            navigateToEdit(note.id);
+          }}
+          sx={{ "& > :not(style)": { m: 1 } }}
+        >
           <Fab color="secondary" aria-label="edit" style={EDITbuttonStyle}>
             <EditIcon />
           </Fab>
