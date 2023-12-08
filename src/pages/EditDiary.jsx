@@ -24,18 +24,16 @@ export const EditDiary = () => {
   const [diario, setDiario] = useState(null);
   const [status, setStatus] = useState("Privado");
 
-  let userId = localStorage.getItem("userId");
-
-  const validateFields = () => {
-    const isTitleValid = title.trim() !== "";
-    const isDescriptionValid = description.trim() !== "";
-    const isStatusValid = status.trim() !== "";
-    setIsValidFields(isTitleValid && isDescriptionValid && isStatusValid);
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
   };
 
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-    validateFields();
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
   };
 
   const theme = useTheme();
@@ -51,25 +49,24 @@ export const EditDiary = () => {
         setTitle(diarioNome);
         setDescription(diarioDescricao);
         setStatus(privacidade);
-        validateFields();
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       }
     };
 
     fetchData();
-  }, [param1, validateFields]);
+  }, [param1]);
 
   const submit = (ev) => {
     ev.preventDefault();
+    api;
     api
-      .post("/diarios/diario", {
+      .put(`/diarios/diario/${param1}`, {
         diarioNome: title,
         diarioDescricao: description,
         privacidade: status,
-        userId: userId,
       })
-      .then(() => navigate("/"))
+      .then(() => navigate(`/diary/${param1}`))
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
@@ -100,7 +97,7 @@ export const EditDiary = () => {
               size="medium"
               fullWidth
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleTitleChange}
             />
             <TextField
               id="description"
@@ -110,7 +107,7 @@ export const EditDiary = () => {
               size="medium"
               fullWidth
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={handleDescriptionChange}
               multiline={true}
             />
             <FormControl fullWidth>
@@ -121,7 +118,7 @@ export const EditDiary = () => {
                 value={status}
                 label="Status"
                 fullWidth
-                onChange={handleChange}
+                onChange={handleStatusChange}
               >
                 <MenuItem value={"Público"}>Public</MenuItem>
                 <MenuItem value={"Privado"}>Private</MenuItem>
@@ -136,7 +133,7 @@ export const EditDiary = () => {
               variant="contained"
               disabled={!isValidFields}
             >
-              Create
+              Update
             </Button>
           </div>
         </div>
