@@ -18,8 +18,9 @@ import { useNavigate } from "react-router-dom";
 export const DiaryPage = () => {
   const { param1 } = useParams();
   const [diario, setDiario] = useState(null);
-  const diarioId = diarioStore((state) => state.diarioId);
-  const setDiarioId = diarioStore((state) => state.setDiarioId);
+  const [notes, setNotes] = useState([]);
+
+  let storageUserId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
 
@@ -51,13 +52,13 @@ export const DiaryPage = () => {
     justifyContent: "center",
   };
 
-  const diario1 = {
-    backgroundColor: "#FFFDD0",
-    padding: "10px",
-    border: "solid 1px",
-    borderRadius: "10px",
-    cursor: "pointer",
-    width: "200px",
+  const regDiarios = {
+    // backgroundColor: "yellow",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "20px",
+    padding: "40px",
+    justifyContent: "center",
   };
 
   const diarioTitulo = {
@@ -137,6 +138,39 @@ export const DiaryPage = () => {
               </p>
             </div>
           )}
+        </div>
+        <div style={regDiarios}>
+          {" "}
+          {/* erro a partir daq */}
+          {notes.map((elements, index) => (
+            <div
+              key={index}
+              style={diario}
+              onClick={() => {
+                navigateWithParams(elements?.id);
+              }}
+            >
+              <p style={diarioTitulo}>{elements?.tituloRegistro}</p>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Arial",
+                  color: "white",
+                }}
+              >
+                {elements?.conteudoRegistro}
+              </p>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Arial",
+                  color: "white",
+                }}
+              >
+                {formatDate(elements?.createdAt)}
+              </p>
+            </div>
+          ))}
         </div>
         <Link to="/create-note">
           <Box sx={{ "& > :not(style)": { m: 1 } }}>
