@@ -36,18 +36,22 @@ export const EditRegDiary = () => {
     setTitle(e.target.value);
   };
 
-  const handleValueChange = (e) => {
-    setValue(e.target.value);
+  const handleValueChange = (content) => {
+    setValue(content);
   };
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value);
   };
 
+  console.log(value);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`/diarios/diario/${param1}`);
+        const response = await api.get(
+          `/registrosdiario/registroDiario/${param1}`
+        );
         setNote(response.data);
         const { tituloRegistro, conteudoRegistro, privacidade, diarioId } =
           response.data;
@@ -65,7 +69,6 @@ export const EditRegDiary = () => {
 
   const submit = (ev) => {
     ev.preventDefault();
-    api;
     api
       .put(`/registrosdiario/registroDiario/${param1}`, {
         tituloRegistro: title,
@@ -115,7 +118,7 @@ export const EditRegDiary = () => {
                   value={status}
                   label="Status"
                   fullWidth
-                  onChange={handleStatusChange}
+                  onChange={(e) => handleStatusChange(e)}
                 >
                   <MenuItem value={"Público"}>Public</MenuItem>
                   <MenuItem value={"Privado"}>Private</MenuItem>
@@ -130,12 +133,8 @@ export const EditRegDiary = () => {
               value={value}
               onChange={handleValueChange}
             />
-            <Button
-              onClick={submit}
-              variant="contained"
-              disabled={!isValidFields}
-            >
-              Create
+            <Button onClick={submit} variant="contained">
+              Update
             </Button>
           </div>
         </div>
