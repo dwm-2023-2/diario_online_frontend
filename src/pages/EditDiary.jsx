@@ -1,9 +1,9 @@
+import { useState, useEffect } from "react";
 import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
-import { userInfoStore } from "../stores/userInfo";
 import {
   Typography,
   TextField,
@@ -15,17 +15,23 @@ import {
   useTheme,
 } from "@mui/material";
 import styles from "../styles/CreateDiary.module.css";
-import { useRef, useState } from "react";
 
 export const EditDiary = () => {
-  const title = useRef({});
-  const description = useRef({});
+  const { param1 } = useParams();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [isValidFields, setIsValidFields] = useState(false);
-  const userInfoState = userInfoStore((state) => state.userInfo);
-
+  const [diario, setDiario] = useState(null);
   const [status, setStatus] = useState("Privado");
 
   let userId = localStorage.getItem("userId");
+
+  const validateFields = () => {
+    const isTitleValid = title.trim() !== "";
+    const isDescriptionValid = description.trim() !== "";
+    const isStatusValid = status.trim() !== "";
+    setIsValidFields(isTitleValid && isDescriptionValid && isStatusValid);
+  };
 
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -36,34 +42,30 @@ export const EditDiary = () => {
 
   const navigate = useNavigate();
 
-  const handleTitleChange = (event) => {
-    title.current.value = event.target.value;
-    validateFields();
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`/diarios/diario/${param1}`);
+        setDiario(response.data);
+        const { diarioNome, diarioDescricao, privacidade } = response.data;
+        setTitle(diarioNome);
+        setDescription(diarioDescricao);
+        setStatus(privacidade);
+        validateFields();
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
 
-  const handleDescriptionChange = (event) => {
-    description.current.value = event.target.value;
-    validateFields();
-  };
-
-  const validateFields = () => {
-    const _title = title.current.value ?? "";
-    const _description = description.current.value ?? "";
-
-    const isTitleValid = _title.trim() !== "";
-    const isDescriptionValid = _description.trim() !== "";
-    const isStatusValid = status.trim() !== "";
-    setIsValidFields(isTitleValid && isDescriptionValid && isStatusValid);
-  };
-
-  console.log(userInfoState);
+    fetchData();
+  }, [param1, validateFields]);
 
   const submit = (ev) => {
     ev.preventDefault();
     api
       .post("/diarios/diario", {
-        diarioNome: title.current.value,
-        diarioDescricao: description.current.value,
+        diarioNome: title,
+        diarioDescricao: description,
         privacidade: status,
         userId: userId,
       })
@@ -97,7 +99,8 @@ export const EditDiary = () => {
               variant="outlined"
               size="medium"
               fullWidth
-              onChange={handleTitleChange}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <TextField
               id="description"
@@ -106,7 +109,8 @@ export const EditDiary = () => {
               variant="outlined"
               size="medium"
               fullWidth
-              onChange={handleDescriptionChange}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               multiline={true}
             />
             <FormControl fullWidth>
@@ -125,26 +129,15 @@ export const EditDiary = () => {
               </Select>
             </FormControl>
 
-            {isValidFields ? (
-              <Button
-                onClick={(ev) => {
-                  submit(ev);
-                }}
-                variant="contained"
-              >
-                Create
-              </Button>
-            ) : (
-              <Button
-                onClick={(ev) => {
-                  submit(ev);
-                }}
-                variant="contained"
-                disabled
-              >
-                Create
-              </Button>
-            )}
+            <Button
+              onClick={(ev) => {
+                submit(ev);
+              }}
+              variant="contained"
+              disabled={!isValidFields}
+            >
+              Create
+            </Button>
           </div>
         </div>
       </Section>
