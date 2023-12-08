@@ -47,10 +47,6 @@ export const Profile = () => {
     });
   };
 
-  const handleEdit = () => {
-    navigate(`/edit-profile/${storageUserId}`);
-  };
-
   return (
     <div>
       <Header></Header>
@@ -69,21 +65,13 @@ export const Profile = () => {
             </Typography>
             <div className={styles.buttons}>
               <Button
-                onClick={handleEdit}
-                variant="contained"
-                color="primary"
-                style={{ marginRight: "8px" }}
-              >
-                Editar perfil
-              </Button>
-              <Button
                 onClick={() => {
                   submitDelete();
                 }}
                 variant="contained"
                 color="error"
               >
-                Deletar usuário
+                Deletar usuario
               </Button>
             </div>
           </div>
