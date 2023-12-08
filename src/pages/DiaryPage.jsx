@@ -10,6 +10,8 @@ import Fab from "@mui/material/Fab";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { diarioStore } from "../stores/diarioStore";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const DiaryPage = () => {
   const { param1 } = useParams();
@@ -17,10 +19,23 @@ export const DiaryPage = () => {
   const diarioId = diarioStore((state) => state.diarioId);
   const setDiarioId = diarioStore((state) => state.setDiarioId);
 
-  const buttonStyle = {
+  const ADDbuttonStyle = {
     position: "fixed",
-    bottom: "20px",
+    bottom: "250px",
     right: "20px",
+  };
+
+  const EDITbuttonStyle = {
+    position: "fixed",
+    bottom: "150px",
+    right: "20px",
+  };
+
+  const DELETEbuttonStyle = {
+    position: "fixed",
+    bottom: "50px",
+    right: "20px",
+    color: "white",
   };
 
   const diarios = {
@@ -91,11 +106,24 @@ export const DiaryPage = () => {
         </div>
         <Link to="/create-note">
           <Box sx={{ "& > :not(style)": { m: 1 } }}>
-            <Fab color="primary" aria-label="add" style={buttonStyle}>
+            <Fab color="primary" aria-label="add" style={ADDbuttonStyle}>
               <AddIcon />
             </Fab>
           </Box>
         </Link>
+        <Box sx={{ "& > :not(style)": { m: 1 } }}>
+          <Fab color="secondary" aria-label="edit" style={EDITbuttonStyle}>
+            <EditIcon />
+          </Fab>
+        </Box>
+        <Box sx={{ "& > :not(style)": { m: 1 } }}>
+          <Fab
+            aria-label="delete"
+            style={{ ...DELETEbuttonStyle, backgroundColor: "#FF0000" }}
+          >
+            <DeleteIcon />
+          </Fab>
+        </Box>
       </Section>
       <Footer></Footer>
     </div>
