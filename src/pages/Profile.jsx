@@ -6,8 +6,7 @@ import api from "../services/api";
 import styles from "../styles/Profile.module.css";
 import { useNavigate } from "react-router-dom";
 import { Typography, TextField, Button } from "@mui/material";
-
-// ... (importações existentes)
+import Swal from "sweetalert2";
 
 export const Profile = () => {
   const userInfoState = userInfoStore((state) => state.userInfo);
@@ -18,21 +17,34 @@ export const Profile = () => {
   let storageEmail = localStorage.getItem("email");
 
   const submitDelete = () => {
-    const shouldDelete = window.confirm(
-      "Are you sure want to delete your account?"
-    );
-    if (shouldDelete) {
-      api
-        .delete(`/users/${storageUserId}`)
-        .then((response) => {
-          console.log(response);
-          navigate("/");
-          localStorage.clear();
-        })
-        .catch((err) => {
-          console.error("ops! ocorreu um erro" + err);
-        });
-    }
+    Swal.fire({
+      title: "Tem certeza?",
+      text: "Você não poderá reverter isso!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sim, Deletar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If user confirms, proceed with the delete action
+        api
+          .delete(`/users/${storageUserId}`)
+          .then((response) => {
+            console.log(response);
+            Swal.fire({
+              title: "Deletado!",
+              text: "Seu usuario foi removido com sucesso!.",
+              icon: "success"
+            });
+            navigate("/login");
+            localStorage.clear();
+          })
+          .catch((err) => {
+            console.error("Oops! An error occurred" + err);
+          });
+      }
+    });
   };
 
   return (
