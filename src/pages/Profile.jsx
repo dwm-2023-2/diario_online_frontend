@@ -19,7 +19,7 @@ export const Profile = () => {
 
   const submitDelete = () => {
     const shouldDelete = window.confirm(
-      "Are you sure you want to delete your account?"
+      "Are you sure want to delete your account?"
     );
     if (shouldDelete) {
       api
@@ -30,13 +30,9 @@ export const Profile = () => {
           localStorage.clear();
         })
         .catch((err) => {
-          console.error("Oops! An error occurred" + err);
+          console.error("ops! ocorreu um erro" + err);
         });
     }
-  };
-
-  const handleEdit = () => {
-    navigate(`/edit-profile/${storageUserId}`);
   };
 
   return (
@@ -57,21 +53,13 @@ export const Profile = () => {
             </Typography>
             <div className={styles.buttons}>
               <Button
-                onClick={handleEdit}
-                variant="contained"
-                color="primary"
-                style={{ marginRight: "8px" }}
-              >
-                Editar perfil
-              </Button>
-              <Button
                 onClick={() => {
                   submitDelete();
                 }}
                 variant="contained"
                 color="error"
               >
-                Deletar usuário
+                Deletar usuario
               </Button>
             </div>
           </div>
