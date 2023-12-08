@@ -1,8 +1,7 @@
-import React, { Component } from "react";
 import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userInfoStore } from "../stores/userInfo";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -57,12 +56,6 @@ export const CreateANote = () => {
 
   const submit = (ev) => {
     ev.preventDefault();
-    const payload = {
-      title: title.current.value,
-      content: value,
-      status,
-    };
-
     api
       .post("/registrosdiario/registroDiario", {
         tituloRegistro: title.current.value,
@@ -78,7 +71,6 @@ export const CreateANote = () => {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-    // console.log(payload);
   };
 
   console.log("diarioId: ", diarioId);
