@@ -42,5 +42,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "vite": "^4.4.5"
-  }
+  },
+  "description": "Frontend da aplicação web Diário Online para a disciplina de Desenvolvimento WebMobile Turma B 2023.2, do curso de Ciência da Computação da Universidade Federal do Tocantins.",
+  "main": "vite.config.js",
+  "author": "",
+  "license": "ISC"
 }
