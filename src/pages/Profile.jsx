@@ -7,8 +7,6 @@ import styles from "../styles/Profile.module.css";
 import { useNavigate } from "react-router-dom";
 import { Typography, TextField, Button } from "@mui/material";
 
-// ... (importações existentes)
-
 export const Profile = () => {
   const userInfoState = userInfoStore((state) => state.userInfo);
   const navigate = useNavigate();
@@ -36,7 +34,6 @@ export const Profile = () => {
   };
 
   const handleEdit = () => {
-    // continuar a lógica
     navigate(`/edit-profile/${storageUserId}`);
   };
 
@@ -47,9 +44,15 @@ export const Profile = () => {
         <div className={styles.section}>
           <div className={styles.forms_box}>
             <div style={{ width: "100%" }}></div>
-            <p>User Name: {storageUsername}</p>
-            <p>User ID: {storageUserId}</p>
-            <p>Email: {storageEmail}</p>
+            <Typography variant="h4" color="primary" gutterBottom>
+              User Name: {storageUsername}
+            </Typography>
+            <Typography variant="h6" color="textSecondary" gutterBottom>
+              User ID: {storageUserId}
+            </Typography>
+            <Typography variant="body1" color="textSecondary" gutterBottom>
+              Email: {storageEmail}
+            </Typography>
             <div className={styles.buttons}>
               <Button onClick={handleEdit} variant="contained" color="primary">
                 Editar perfil
