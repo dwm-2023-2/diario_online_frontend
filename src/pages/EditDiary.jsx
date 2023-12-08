@@ -17,7 +17,7 @@ import {
 import styles from "../styles/CreateDiary.module.css";
 import { useRef, useState } from "react";
 
-export const CreateDiary = () => {
+export const EditDiary = () => {
   const title = useRef({});
   const description = useRef({});
   const [isValidFields, setIsValidFields] = useState(false);

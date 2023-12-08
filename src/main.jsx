@@ -8,6 +8,7 @@ import { CreateANote } from "./pages/CreateANote";
 import { Profile } from "./pages/Profile";
 import { DiaryPage } from "./pages/DiaryPage";
 import { RegDiaryPage } from "./pages/RegDiaryPage";
+import { EditDiary } from "./pages/EditDiary";
 import "./index.css";
 
 const container = document.getElementById("root");
@@ -24,6 +25,7 @@ root.render(
       <Route exact path="/diary/:param1" element={<DiaryPage />} />
       <Route exact path="/create-note" element={<CreateANote />} />
       <Route exact path="/reg_diary/:param1" element={<RegDiaryPage />} />
+      <Route exact path="/edit_diary/:param1" element={<EditDiary />} />
     </Routes>
   </Router>
 );
