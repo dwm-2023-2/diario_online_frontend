@@ -21,6 +21,7 @@ import {
   diarios,
   regDiarios,
   diarioTitulo,
+  diarioStyle,
 } from "./DiaryPageStyles";
 
 export const DiaryPage = () => {
@@ -102,27 +103,15 @@ export const DiaryPage = () => {
           )}
         </div>
         <div style={regDiarios}>
-          {" "}
-          {/* erro a partir daq */}
           {notes.map((elements, index) => (
             <div
               key={index}
-              style={diario}
+              style={diarioStyle}
               onClick={() => {
                 navigateWithParams(elements?.id);
               }}
             >
               <p style={diarioTitulo}>{elements?.tituloRegistro}</p>
-              <p
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Arial",
-                  color: "white",
-                }}
-              >
-                {elements?.id}
-                {elements?.conteudoRegistro}
-              </p>
               <p
                 style={{
                   textAlign: "center",

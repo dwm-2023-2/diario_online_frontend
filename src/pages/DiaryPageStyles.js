@@ -43,3 +43,11 @@ export const diarioTitulo = {
   textAlign: "center",
   padding: "5px",
 };
+
+export const diarioStyle = {
+  backgroundColor: "#1976D2",
+  padding: "10px",
+  borderRadius: "10px",
+  cursor: "pointer",
+  width: "500px",
+};
