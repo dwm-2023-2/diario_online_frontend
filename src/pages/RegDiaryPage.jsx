@@ -33,7 +33,7 @@ export const RegDiaryPage = () => {
         .delete(`registrosdiario/registroDiario/${param1}`)
         .then((response) => {
           console.log(response);
-          navigate(`/diary`);
+          navigate(`/diary/${note?.diarioId}`);
         })
         .catch((err) => {
           console.error("ops! ocorreu um erro " + err);
