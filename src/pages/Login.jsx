@@ -8,6 +8,7 @@ import { useState } from "react";
 import api from "../services/api";
 import { userStore } from "../stores/userState";
 import { userInfoStore } from "../stores/userInfo";
+import Swal from "sweetalert2";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -48,10 +49,36 @@ export const Login = () => {
         password: password,
       })
       .then((response) => handleLogin(response.data))
-      .catch((err) => {
-        console.error("ops! ocorreu um erro" + err);
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            // Erro de autenticação (email ou senha incorretos)
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Senha Incorreta!",
+            });
+          } else if (error.response.status === 412) {
+            // Outro tratamento para o código de status 402, se necessário
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Email Incorreto!",
+            });
+          } else {
+            // Outros códigos de status diferentes de 401 e 402
+            console.error("Erro de resposta do servidor:", error.response.data);
+            console.error("Código de status HTTP:", error.response.status);
+          }
+        } else if (error.request) {
+          // A solicitação foi feita, mas não recebeu resposta
+          console.error("Sem resposta do servidor:", error.request);
+        } else {
+          // Algo aconteceu na configuração da solicitação que gerou um erro
+          console.error("Erro ao configurar a solicitação:", error.message);
+        }
       });
-  };
+  };  
 
   let storageIsUserLogged = localStorage.getItem("isUserLogged");
   let boolStorageIsUserLogged = storageIsUserLogged === "true";
