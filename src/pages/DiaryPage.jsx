@@ -9,66 +9,25 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import { diarioStore } from "../stores/diarioStore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ContactSupportOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import {
+  ADDbuttonStyle,
+  EDITbuttonStyle,
+  DELETEbuttonStyle,
+  diarios,
+  regDiarios,
+  diarioTitulo,
+  diarioStyle,
+} from "./DiaryPageStyles";
 
 export const DiaryPage = () => {
   const { param1 } = useParams();
   const [diario, setDiario] = useState(null);
   const [notes, setNotes] = useState([]);
 
-  let storageUserId = localStorage.getItem("userId");
-
   const navigate = useNavigate();
-
-  const ADDbuttonStyle = {
-    position: "fixed",
-    bottom: "250px",
-    right: "20px",
-  };
-
-  const EDITbuttonStyle = {
-    position: "fixed",
-    bottom: "150px",
-    right: "20px",
-  };
-
-  const DELETEbuttonStyle = {
-    position: "fixed",
-    bottom: "50px",
-    right: "20px",
-    color: "white",
-  };
-
-  const diarios = {
-    // backgroundColor: "yellow",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    padding: "40px",
-    justifyContent: "center",
-  };
-
-  const regDiarios = {
-    // backgroundColor: "yellow",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    padding: "40px",
-    justifyContent: "center",
-  };
-
-  const diarioTitulo = {
-    fontSize: "14px",
-    fontFamily: "Arial",
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: "5px",
-  };
 
   const submitDeleteDiary = () => {
     const shouldDelete = window.confirm(
@@ -101,24 +60,26 @@ export const DiaryPage = () => {
   }, [param1]);
 
   useEffect(() => {
-    let storageUserId = localStorage.getItem("userId");
-
     api
       .get(`registrosdiario/registrosDiario?diarioId=${param1}`)
       .then((response) => {
         console.log(response);
+        setNotes(response.data);
       })
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-  }, [storageUserId]);
+  }, [param1]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return format(date, "yyyy-MM-dd");
   };
-  // console.log("Diario ID:");
-  // console.log(diarioId);
+
+  const navigateWithParams = (regDiarioId) => {
+    navigate(`/reg_diary/${regDiarioId}`);
+  };
+
   return (
     <div>
       <Header></Header>
@@ -140,26 +101,15 @@ export const DiaryPage = () => {
           )}
         </div>
         <div style={regDiarios}>
-          {" "}
-          {/* erro a partir daq */}
           {notes.map((elements, index) => (
             <div
               key={index}
-              style={diario}
+              style={diarioStyle}
               onClick={() => {
                 navigateWithParams(elements?.id);
               }}
             >
               <p style={diarioTitulo}>{elements?.tituloRegistro}</p>
-              <p
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Arial",
-                  color: "white",
-                }}
-              >
-                {elements?.conteudoRegistro}
-              </p>
               <p
                 style={{
                   textAlign: "center",

@@ -1,9 +1,7 @@
-import React, { Component } from "react";
 import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
-import { Link, useNavigate } from "react-router-dom";
-import { userInfoStore } from "../stores/userInfo";
+import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import api from "../services/api";
@@ -23,11 +21,9 @@ import { diarioStore } from "../stores/diarioStore";
 
 export const CreateANote = () => {
   const title = useRef({});
-  const content = useRef({});
   const [status, setStatus] = useState("Privado");
   const [value, setValue] = useState("");
   const [isValidFields, setIsValidFields] = useState(false);
-  const userInfoState = userInfoStore((state) => state.userInfo);
   const diarioId = diarioStore((state) => state.diarioId);
 
   const theme = useTheme();
@@ -66,10 +62,9 @@ export const CreateANote = () => {
     api
       .post("/registrosdiario/registroDiario", {
         tituloRegistro: title.current.value,
-        conteudoRegistro: content.current.value,
+        conteudoRegistro: value,
         privacidade: status,
-        userId: userInfoState.id,
-        diarioAssociadoID: diarioId,
+        diarioId: diarioId,
       })
       .then((response) => {
         console.log(response);
@@ -78,7 +73,7 @@ export const CreateANote = () => {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-    // console.log(payload);
+    console.log(payload);
   };
 
   console.log("diarioId: ", diarioId);

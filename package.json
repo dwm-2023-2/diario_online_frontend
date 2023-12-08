@@ -17,6 +17,7 @@
     "@mui/material": "^5.14.15",
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
+    "dompurify": "^3.0.6",
     "dotenv": "^16.3.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
