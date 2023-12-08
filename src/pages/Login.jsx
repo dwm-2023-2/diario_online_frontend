@@ -58,7 +58,7 @@ export const Login = () => {
               title: "Oops...",
               text: "Senha Incorreta!",
             });
-          } else if (error.response.status === 402) {
+          } else if (error.response.status === 412) {
             // Outro tratamento para o código de status 402, se necessário
             Swal.fire({
               icon: "error",
