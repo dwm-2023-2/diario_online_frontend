@@ -11,9 +11,11 @@ export const MenuButtons = () => {
   const navigate = useNavigate();
 
   const submitLogOut = () => {
+    console.log("essa porra funciona?");
     api
       .get(`/users/logout/`)
       .then((response) => {
+        console.log("essa porra funciona?");
         navigate("/");
         setuserStore(false);
         localStorage.clear();

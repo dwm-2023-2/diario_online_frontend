@@ -1,9 +1,9 @@
+import { useState, useEffect } from "react";
 import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
-import { userInfoStore } from "../stores/userInfo";
 import {
   Typography,
   TextField,
@@ -15,59 +15,58 @@ import {
   useTheme,
 } from "@mui/material";
 import styles from "../styles/CreateDiary.module.css";
-import { useRef, useState } from "react";
 
-export const CreateDiary = () => {
-  const title = useRef({});
-  const description = useRef({});
+export const EditDiary = () => {
+  const { param1 } = useParams();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [isValidFields, setIsValidFields] = useState(false);
-  const userInfoState = userInfoStore((state) => state.userInfo);
-
+  const [diario, setDiario] = useState(null);
   const [status, setStatus] = useState("Privado");
 
-  let userId = localStorage.getItem("userId");
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
 
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-    validateFields();
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
   };
 
   const theme = useTheme();
 
   const navigate = useNavigate();
 
-  const handleTitleChange = (event) => {
-    title.current.value = event.target.value;
-    validateFields();
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`/diarios/diario/${param1}`);
+        setDiario(response.data);
+        const { diarioNome, diarioDescricao, privacidade } = response.data;
+        setTitle(diarioNome);
+        setDescription(diarioDescricao);
+        setStatus(privacidade);
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
 
-  const handleDescriptionChange = (event) => {
-    description.current.value = event.target.value;
-    validateFields();
-  };
-
-  const validateFields = () => {
-    const _title = title.current.value ?? "";
-    const _description = description.current.value ?? "";
-
-    const isTitleValid = _title.trim() !== "";
-    const isDescriptionValid = _description.trim() !== "";
-    const isStatusValid = status.trim() !== "";
-    setIsValidFields(isTitleValid && isDescriptionValid && isStatusValid);
-  };
-
-  console.log(userInfoState);
+    fetchData();
+  }, [param1]);
 
   const submit = (ev) => {
     ev.preventDefault();
+    api;
     api
-      .post("/diarios/diario", {
-        diarioNome: title.current.value,
-        diarioDescricao: description.current.value,
+      .put(`/diarios/diario/${param1}`, {
+        diarioNome: title,
+        diarioDescricao: description,
         privacidade: status,
-        userId: userId,
       })
-      .then(() => navigate("/"))
+      .then(() => navigate(`/diary/${param1}`))
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
@@ -88,7 +87,7 @@ export const CreateDiary = () => {
             }}
             variant="h2"
           >
-            Create a Diary
+            Edit the diary
           </Typography>
           <div className={styles.forms_box}>
             <TextField
@@ -97,6 +96,7 @@ export const CreateDiary = () => {
               variant="outlined"
               size="medium"
               fullWidth
+              value={title}
               onChange={handleTitleChange}
             />
             <TextField
@@ -106,6 +106,7 @@ export const CreateDiary = () => {
               variant="outlined"
               size="medium"
               fullWidth
+              value={description}
               onChange={handleDescriptionChange}
               multiline={true}
             />
@@ -117,7 +118,7 @@ export const CreateDiary = () => {
                 value={status}
                 label="Status"
                 fullWidth
-                onChange={handleChange}
+                onChange={handleStatusChange}
               >
                 <MenuItem value={"Público"}>Public</MenuItem>
                 <MenuItem value={"Privado"}>Private</MenuItem>
@@ -125,26 +126,15 @@ export const CreateDiary = () => {
               </Select>
             </FormControl>
 
-            {isValidFields ? (
-              <Button
-                onClick={(ev) => {
-                  submit(ev);
-                }}
-                variant="contained"
-              >
-                Create
-              </Button>
-            ) : (
-              <Button
-                onClick={(ev) => {
-                  submit(ev);
-                }}
-                variant="contained"
-                disabled
-              >
-                Create
-              </Button>
-            )}
+            <Button
+              onClick={(ev) => {
+                submit(ev);
+              }}
+              variant="contained"
+              disabled={!isValidFields}
+            >
+              Update
+            </Button>
           </div>
         </div>
       </Section>

@@ -9,45 +9,42 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import { diarioStore } from "../stores/diarioStore";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
+import {
+  ADDbuttonStyle,
+  EDITbuttonStyle,
+  DELETEbuttonStyle,
+  diarios,
+  regDiarios,
+  diarioTitulo,
+  diarioStyle,
+} from "./DiaryPageStyles";
 
 export const DiaryPage = () => {
   const { param1 } = useParams();
   const [diario, setDiario] = useState(null);
-  const diarioId = diarioStore((state) => state.diarioId);
-  const setDiarioId = diarioStore((state) => state.setDiarioId);
+  const [notes, setNotes] = useState([]);
 
-  const buttonStyle = {
-    position: "fixed",
-    bottom: "20px",
-    right: "20px",
-  };
+  const navigate = useNavigate();
 
-  const diarios = {
-    // backgroundColor: "yellow",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    padding: "40px",
-    justifyContent: "center",
-  };
+  const submitDeleteDiary = () => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this diary?"
+    );
 
-  const diario1 = {
-    backgroundColor: "#FFFDD0",
-    padding: "10px",
-    border: "solid 1px",
-    borderRadius: "10px",
-    cursor: "pointer",
-    width: "200px",
-  };
-
-  const diarioTitulo = {
-    fontSize: "14px",
-    fontFamily: "Arial",
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: "5px",
+    if (shouldDelete) {
+      api
+        .delete(`diarios/diario/${param1}`)
+        .then((response) => {
+          console.log(response);
+          navigate(`/`);
+        })
+        .catch((err) => {
+          console.error("ops! ocorreu um erro " + err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -59,16 +56,34 @@ export const DiaryPage = () => {
         console.error("Erro ao buscar dados:", error);
       }
     };
-
     fetchData();
+  }, [param1]);
+
+  useEffect(() => {
+    api
+      .get(`registrosdiario/registrosDiario?diarioId=${param1}`)
+      .then((response) => {
+        console.log(response);
+        setNotes(response.data);
+      })
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
   }, [param1]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return format(date, "yyyy-MM-dd");
   };
-  // console.log("Diario ID:");
-  // console.log(diarioId);
+
+  const navigateWithParams = (regDiarioId) => {
+    navigate(`/reg_diary/${regDiarioId}`);
+  };
+
+  const navigateToEdit = (diaryId) => {
+    navigate(`/edit_diary/${diaryId}`);
+  };
+
   return (
     <div>
       <Header></Header>
@@ -89,13 +104,56 @@ export const DiaryPage = () => {
             </div>
           )}
         </div>
+        <div style={regDiarios}>
+          {notes.map((elements, index) => (
+            <div
+              key={index}
+              style={diarioStyle}
+              onClick={() => {
+                navigateWithParams(elements?.id);
+              }}
+            >
+              <p style={diarioTitulo}>{elements?.tituloRegistro}</p>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Arial",
+                  color: "white",
+                }}
+              >
+                {formatDate(elements?.createdAt)}
+              </p>
+            </div>
+          ))}
+        </div>
         <Link to="/create-note">
           <Box sx={{ "& > :not(style)": { m: 1 } }}>
-            <Fab color="primary" aria-label="add" style={buttonStyle}>
+            <Fab color="primary" aria-label="add" style={ADDbuttonStyle}>
               <AddIcon />
             </Fab>
           </Box>
         </Link>
+        <Box
+          onClick={() => {
+            navigateToEdit(diario.id);
+          }}
+          sx={{ "& > :not(style)": { m: 1 } }}
+        >
+          <Fab color="secondary" aria-label="edit" style={EDITbuttonStyle}>
+            <EditIcon />
+          </Fab>
+        </Box>
+        <Box
+          onClick={() => submitDeleteDiary()}
+          sx={{ "& > :not(style)": { m: 1 } }}
+        >
+          <Fab
+            aria-label="delete"
+            style={{ ...DELETEbuttonStyle, backgroundColor: "#FF0000" }}
+          >
+            <DeleteIcon />
+          </Fab>
+        </Box>
       </Section>
       <Footer></Footer>
     </div>
