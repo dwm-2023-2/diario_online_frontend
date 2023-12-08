@@ -9,18 +9,16 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import { diarioStore } from "../stores/diarioStore";
+// import { diarioStore } from "../stores/diarioStore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ContactSupportOutlined } from "@mui/icons-material";
+// import { ContactSupportOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 export const DiaryPage = () => {
   const { param1 } = useParams();
   const [diario, setDiario] = useState(null);
   const [notes, setNotes] = useState([]);
-
-  let storageUserId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
 
@@ -101,8 +99,6 @@ export const DiaryPage = () => {
   }, [param1]);
 
   useEffect(() => {
-    let storageUserId = localStorage.getItem("userId");
-
     api
       .get(`registrosdiario/registrosDiario?diarioId=${param1}`)
       .then((response) => {
@@ -111,11 +107,15 @@ export const DiaryPage = () => {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-  }, [storageUserId]);
+  }, [param1]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return format(date, "yyyy-MM-dd");
+  };
+
+  const navigateWithParams = (regDiarioId) => {
+    navigate(`/reg_diary/${regDiarioId}`);
   };
   // console.log("Diario ID:");
   // console.log(diarioId);
