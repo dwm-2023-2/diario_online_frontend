@@ -1,7 +1,7 @@
 import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { userInfoStore } from "../stores/userInfo";
 import {
@@ -35,7 +35,6 @@ export const CreateDiary = () => {
   const theme = useTheme();
 
   const navigate = useNavigate();
-  const handleClick = () => navigate("/");
 
   const handleTitleChange = (event) => {
     title.current.value = event.target.value;
@@ -61,11 +60,6 @@ export const CreateDiary = () => {
 
   const submit = (ev) => {
     ev.preventDefault();
-    const payload = {
-      title: title.current.value,
-      description: description.current.value,
-      status: status,
-    };
     api
       .post("/diarios/diario", {
         diarioNome: title.current.value,
@@ -73,19 +67,12 @@ export const CreateDiary = () => {
         privacidade: status,
         userId: userId,
       })
-      .then((response) => navigate("/"))
+      .then(() => navigate("/"))
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
     // console.log(payload);
   };
-
-  const payload = {
-    title: title.current.value,
-    description: description.current.value,
-    status: status,
-  };
-  // console.log(payload);
 
   return (
     <div>
