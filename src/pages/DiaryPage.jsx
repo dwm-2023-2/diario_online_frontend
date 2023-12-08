@@ -9,10 +9,8 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-// import { diarioStore } from "../stores/diarioStore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-// import { ContactSupportOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import {
   ADDbuttonStyle,

@@ -7,78 +7,33 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-import { Link } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-// import { diarioStore } from "../stores/diarioStore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-// import { ContactSupportOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import {
+  EDITbuttonStyle,
+  DELETEbuttonStyle,
+  diarios,
+  diarioTitulo,
+} from "./DiaryPageStyles";
 
 export const RegDiaryPage = () => {
   const { param1 } = useParams();
-  const [diario, setDiario] = useState(null);
-  const [notes, setNotes] = useState([]);
+  const [note, setNote] = useState(null);
 
   const navigate = useNavigate();
 
-  const ADDbuttonStyle = {
-    position: "fixed",
-    bottom: "250px",
-    right: "20px",
-  };
-
-  const EDITbuttonStyle = {
-    position: "fixed",
-    bottom: "150px",
-    right: "20px",
-  };
-
-  const DELETEbuttonStyle = {
-    position: "fixed",
-    bottom: "50px",
-    right: "20px",
-    color: "white",
-  };
-
-  const diarios = {
-    // backgroundColor: "yellow",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    padding: "40px",
-    justifyContent: "center",
-  };
-
-  const regDiarios = {
-    // backgroundColor: "yellow",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    padding: "40px",
-    justifyContent: "center",
-  };
-
-  const diarioTitulo = {
-    fontSize: "14px",
-    fontFamily: "Arial",
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: "5px",
-  };
-
-  const submitDeleteDiary = () => {
+  const submitDeleteNote = () => {
     const shouldDelete = window.confirm(
-      "Are you sure you want to delete this diary?"
+      "Are you sure you want to delete this note?"
     );
 
     if (shouldDelete) {
       api
-        .delete(`diarios/diario/${param1}`)
+        .delete(`registrosdiario/registroDiario/${param1}`)
         .then((response) => {
           console.log(response);
-          navigate(`/`);
+          navigate(`/diary`);
         })
         .catch((err) => {
           console.error("ops! ocorreu um erro " + err);
@@ -89,8 +44,10 @@ export const RegDiaryPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`/diarios/diario/${param1}`);
-        setDiario(response.data);
+        const response = await api.get(
+          `/registrosdiario/registroDiario/${param1}`
+        );
+        setNote(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       }
@@ -98,95 +55,43 @@ export const RegDiaryPage = () => {
     fetchData();
   }, [param1]);
 
-  useEffect(() => {
-    api
-      .get(`registrosdiario/registrosDiario?diarioId=${param1}`)
-      .then((response) => {
-        console.log(response);
-        setNotes(response.data);
-      })
-      .catch((err) => {
-        console.error("ops! ocorreu um erro" + err);
-      });
-  }, [param1]);
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return format(date, "yyyy-MM-dd");
   };
 
-  const navigateWithParams = (regDiarioId) => {
-    navigate(`/reg_diary/${regDiarioId}`);
-  };
-  // console.log("Diario ID:");
-  // console.log(diarioId);
   return (
     <div>
       <Header></Header>
       <Section>
         <div style={diarios}>
-          {diario && (
-            <div key={diario.diarioTitulo} style={diarioTitulo}>
+          {note && (
+            <div key={note.tituloRegistro} style={diarioTitulo}>
               <p style={diarioTitulo}>
-                <h1>{diario?.diarioNome}</h1>
-              </p>
-              <p style={{ textAlign: "center", color: "black" }}>
-                <h3>{diario?.diarioDescricao}</h3>
+                <h1>Nota: {note?.tituloRegistro}</h1>
               </p>
               <br />
               <p style={{ textAlign: "center" }}>
-                <h4>{formatDate(diario?.createdAt)}</h4>
+                <h4>Data de criação: {formatDate(note?.createdAt)}</h4>
               </p>
+              <p style={{ textAlign: "center" }}>
+                <h4>Última atualização: {formatDate(note?.updatedAt)}</h4>
+              </p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: note?.conteudoRegistro || "",
+                }}
+              />
             </div>
           )}
         </div>
-        <div style={regDiarios}>
-          {" "}
-          {/* erro a partir daq */}
-          {notes.map((elements, index) => (
-            <div
-              key={index}
-              style={diario}
-              onClick={() => {
-                navigateWithParams(elements?.id);
-              }}
-            >
-              <p style={diarioTitulo}>{elements?.tituloRegistro}</p>
-              <p
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Arial",
-                  color: "white",
-                }}
-              >
-                {elements?.conteudoRegistro}
-              </p>
-              <p
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Arial",
-                  color: "white",
-                }}
-              >
-                {formatDate(elements?.createdAt)}
-              </p>
-            </div>
-          ))}
-        </div>
-        <Link to="/create-note">
-          <Box sx={{ "& > :not(style)": { m: 1 } }}>
-            <Fab color="primary" aria-label="add" style={ADDbuttonStyle}>
-              <AddIcon />
-            </Fab>
-          </Box>
-        </Link>
         <Box sx={{ "& > :not(style)": { m: 1 } }}>
           <Fab color="secondary" aria-label="edit" style={EDITbuttonStyle}>
             <EditIcon />
           </Fab>
         </Box>
         <Box
-          onClick={() => submitDeleteDiary()}
+          onClick={() => submitDeleteNote()}
           sx={{ "& > :not(style)": { m: 1 } }}
         >
           <Fab
