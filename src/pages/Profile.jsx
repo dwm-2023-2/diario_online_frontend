@@ -50,7 +50,9 @@ export const Profile = () => {
                 }}
                 variant="contained"
               >
+
                 Excluir Conta
+
               </Button>
             </div>
           </div>
