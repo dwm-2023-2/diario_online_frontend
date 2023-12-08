@@ -103,6 +103,7 @@ export const DiaryPage = () => {
       .get(`registrosdiario/registrosDiario?diarioId=${param1}`)
       .then((response) => {
         console.log(response);
+        setNotes(response.data);
       })
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
