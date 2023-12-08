@@ -12,12 +12,16 @@ import AddIcon from "@mui/icons-material/Add";
 import { diarioStore } from "../stores/diarioStore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { ContactSupportOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export const DiaryPage = () => {
   const { param1 } = useParams();
   const [diario, setDiario] = useState(null);
   const diarioId = diarioStore((state) => state.diarioId);
   const setDiarioId = diarioStore((state) => state.setDiarioId);
+
+  const navigate = useNavigate();
 
   const ADDbuttonStyle = {
     position: "fixed",
@@ -65,6 +69,24 @@ export const DiaryPage = () => {
     padding: "5px",
   };
 
+  const submitDeleteDiary = () => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this diary?"
+    );
+
+    if (shouldDelete) {
+      api
+        .delete(`diarios/diario/${param1}`)
+        .then((response) => {
+          console.log(response);
+          navigate(`/`);
+        })
+        .catch((err) => {
+          console.error("ops! ocorreu um erro " + err);
+        });
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,9 +96,21 @@ export const DiaryPage = () => {
         console.error("Erro ao buscar dados:", error);
       }
     };
-
     fetchData();
   }, [param1]);
+
+  useEffect(() => {
+    let storageUserId = localStorage.getItem("userId");
+
+    api
+      .get(`registrosdiario/registrosDiario?diarioId=${param1}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
+  }, [storageUserId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -116,7 +150,10 @@ export const DiaryPage = () => {
             <EditIcon />
           </Fab>
         </Box>
-        <Box sx={{ "& > :not(style)": { m: 1 } }}>
+        <Box
+          onClick={() => submitDeleteDiary()}
+          sx={{ "& > :not(style)": { m: 1 } }}
+        >
           <Fab
             aria-label="delete"
             style={{ ...DELETEbuttonStyle, backgroundColor: "#FF0000" }}
