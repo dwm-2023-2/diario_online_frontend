@@ -64,20 +64,24 @@ export const CreateANote = () => {
     };
 
     api
-      .post("/diarios/diario", {
+      .post("/registrosdiario/registroDiario", {
         tituloRegistro: title.current.value,
         conteudoRegistro: content.current.value,
         privacidade: status,
         userId: userInfoState.id,
         diarioAssociadoID: diarioId,
       })
-      .then((response) => {})
+      .then((response) => {
+        console.log(response);
+        navigate(`/diary/${diarioId}`);
+      })
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-    navigate(`/diary/${diarioId}`);
     // console.log(payload);
   };
+
+  console.log("diarioId: ", diarioId);
 
   return (
     <div>
