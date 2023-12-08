@@ -14,6 +14,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 // import { ContactSupportOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import {
+  ADDbuttonStyle,
+  EDITbuttonStyle,
+  DELETEbuttonStyle,
+  diarios,
+  regDiarios,
+  diarioTitulo,
+} from "./DiaryPageStyles";
 
 export const DiaryPage = () => {
   const { param1 } = useParams();
@@ -21,52 +29,6 @@ export const DiaryPage = () => {
   const [notes, setNotes] = useState([]);
 
   const navigate = useNavigate();
-
-  const ADDbuttonStyle = {
-    position: "fixed",
-    bottom: "250px",
-    right: "20px",
-  };
-
-  const EDITbuttonStyle = {
-    position: "fixed",
-    bottom: "150px",
-    right: "20px",
-  };
-
-  const DELETEbuttonStyle = {
-    position: "fixed",
-    bottom: "50px",
-    right: "20px",
-    color: "white",
-  };
-
-  const diarios = {
-    // backgroundColor: "yellow",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    padding: "40px",
-    justifyContent: "center",
-  };
-
-  const regDiarios = {
-    // backgroundColor: "yellow",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    padding: "40px",
-    justifyContent: "center",
-  };
-
-  const diarioTitulo = {
-    fontSize: "14px",
-    fontFamily: "Arial",
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: "5px",
-  };
 
   const submitDeleteDiary = () => {
     const shouldDelete = window.confirm(
@@ -118,8 +80,7 @@ export const DiaryPage = () => {
   const navigateWithParams = (regDiarioId) => {
     navigate(`/reg_diary/${regDiarioId}`);
   };
-  // console.log("Diario ID:");
-  // console.log(diarioId);
+
   return (
     <div>
       <Header></Header>
