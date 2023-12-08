@@ -7,6 +7,8 @@ import styles from "../styles/Profile.module.css";
 import { useNavigate } from "react-router-dom";
 import { Typography, TextField, Button } from "@mui/material";
 
+// ... (importações existentes)
+
 export const Profile = () => {
   const userInfoState = userInfoStore((state) => state.userInfo);
   const navigate = useNavigate();
@@ -54,7 +56,12 @@ export const Profile = () => {
               Email: {storageEmail}
             </Typography>
             <div className={styles.buttons}>
-              <Button onClick={handleEdit} variant="contained" color="primary">
+              <Button
+                onClick={handleEdit}
+                variant="contained"
+                color="primary"
+                style={{ marginRight: "8px" }}
+              >
                 Editar perfil
               </Button>
               <Button
