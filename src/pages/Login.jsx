@@ -48,10 +48,28 @@ export const Login = () => {
         password: password,
       })
       .then((response) => handleLogin(response.data))
-      .catch((err) => {
-        console.error("ops! ocorreu um erro" + err);
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            // Erro de autenticação (email ou senha incorretos)
+            alert("Senha Incorreta.");
+          } else if (error.response.status === 402) {
+            // Outro tratamento para o código de status 402, se necessário
+            alert("Email incorreto.");
+          } else {
+            // Outros códigos de status diferentes de 401 e 402
+            console.error("Erro de resposta do servidor:", error.response.data);
+            console.error("Código de status HTTP:", error.response.status);
+          }
+        } else if (error.request) {
+          // A solicitação foi feita, mas não recebeu resposta
+          console.error("Sem resposta do servidor:", error.request);
+        } else {
+          // Algo aconteceu na configuração da solicitação que gerou um erro
+          console.error("Erro ao configurar a solicitação:", error.message);
+        }
       });
-  };
+  };  
 
   let storageIsUserLogged = localStorage.getItem("isUserLogged");
   let boolStorageIsUserLogged = storageIsUserLogged === "true";
@@ -118,7 +136,7 @@ export const Login = () => {
               variant="contained"
               disabled
             >
-              Login
+              Login1
             </Button>
           ) : (
             <Button
@@ -127,7 +145,7 @@ export const Login = () => {
               }}
               variant="contained"
             >
-              Login
+              Login2
             </Button>
           )}
         </div>
