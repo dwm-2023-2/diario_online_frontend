@@ -8,6 +8,7 @@ import { useState } from "react";
 import api from "../services/api";
 import { userStore } from "../stores/userState";
 import { userInfoStore } from "../stores/userInfo";
+import Swal from "sweetalert2";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -52,10 +53,18 @@ export const Login = () => {
         if (error.response) {
           if (error.response.status === 401) {
             // Erro de autenticação (email ou senha incorretos)
-            alert("Senha Incorreta.");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Senha Incorreta!",
+            });
           } else if (error.response.status === 402) {
             // Outro tratamento para o código de status 402, se necessário
-            alert("Email incorreto.");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Email Incorreto!",
+            });
           } else {
             // Outros códigos de status diferentes de 401 e 402
             console.error("Erro de resposta do servidor:", error.response.data);
@@ -136,7 +145,7 @@ export const Login = () => {
               variant="contained"
               disabled
             >
-              Login1
+              Login
             </Button>
           ) : (
             <Button
@@ -145,7 +154,7 @@ export const Login = () => {
               }}
               variant="contained"
             >
-              Login2
+              Login
             </Button>
           )}
         </div>
