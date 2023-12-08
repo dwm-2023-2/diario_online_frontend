@@ -10,6 +10,8 @@ import { DiaryPage } from "./pages/DiaryPage";
 import { RegDiaryPage } from "./pages/RegDiaryPage";
 import { EditDiary } from "./pages/EditDiary";
 import { EditRegDiary } from "./pages/EditRegDiary";
+import { ForgetPassword } from "./pages/ForgetPassword";
+import { ResetPassword } from "./pages/ResetPassword";
 import "./index.css";
 
 const container = document.getElementById("root");
@@ -28,6 +30,8 @@ root.render(
       <Route exact path="/reg_diary/:param1" element={<RegDiaryPage />} />
       <Route exact path="/edit_diary/:param1" element={<EditDiary />} />
       <Route exact path="/edit_reg_diary/:param1" element={<EditRegDiary />} />
+      <Route exact path="/forgetpassword" element={<ForgetPassword />} />
+      <Route exact path="/reset-password" element={<ResetPassword />} />
     </Routes>
   </Router>
 );
