@@ -15,7 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import { ContactSupportOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-export const DiaryPage = () => {
+export const RegDiaryPage = () => {
   const { param1 } = useParams();
   const [diario, setDiario] = useState(null);
   const [notes, setNotes] = useState([]);
@@ -159,7 +159,6 @@ export const DiaryPage = () => {
                   color: "white",
                 }}
               >
-                {elements?.id}
                 {elements?.conteudoRegistro}
               </p>
               <p
