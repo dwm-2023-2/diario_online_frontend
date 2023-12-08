@@ -80,6 +80,10 @@ export const DiaryPage = () => {
     navigate(`/reg_diary/${regDiarioId}`);
   };
 
+  const navigateToEdit = (diaryId) => {
+    navigate(`/edit_diary/${diaryId}`);
+  };
+
   return (
     <div>
       <Header></Header>
@@ -129,7 +133,12 @@ export const DiaryPage = () => {
             </Fab>
           </Box>
         </Link>
-        <Box sx={{ "& > :not(style)": { m: 1 } }}>
+        <Box
+          onClick={() => {
+            navigateToEdit(diario.id);
+          }}
+          sx={{ "& > :not(style)": { m: 1 } }}
+        >
           <Fab color="secondary" aria-label="edit" style={EDITbuttonStyle}>
             <EditIcon />
           </Fab>
