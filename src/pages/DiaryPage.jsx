@@ -67,8 +67,8 @@ export const DiaryPage = () => {
     const date = new Date(dateString);
     return format(date, "yyyy-MM-dd");
   };
-  console.log("Diario ID:");
-  console.log(diarioId);
+  // console.log("Diario ID:");
+  // console.log(diarioId);
   return (
     <div>
       <Header></Header>
@@ -89,13 +89,13 @@ export const DiaryPage = () => {
             </div>
           )}
         </div>
-        <Box sx={{ "& > :not(style)": { m: 1 } }}>
-          <Fab color="primary" aria-label="add" style={buttonStyle}>
-            <Link to="/create-note">
+        <Link to="/create-note">
+          <Box sx={{ "& > :not(style)": { m: 1 } }}>
+            <Fab color="primary" aria-label="add" style={buttonStyle}>
               <AddIcon />
-            </Link>
-          </Fab>
-        </Box>
+            </Fab>
+          </Box>
+        </Link>
       </Section>
       <Footer></Footer>
     </div>

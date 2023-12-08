@@ -1,4 +1,4 @@
-import { Header } from "../layout/HeaderHomeNotLogin";
+import { Header } from "../layout/Header";
 import { Section } from "../layout/Section";
 import { Footer } from "../layout/Footer";
 import { Typography } from "@mui/material";
@@ -20,15 +20,34 @@ export const Home = () => {
   const [isNotesEmpty, setIsNotesEmpty] = useState(false);
 
   const userState = userStore((state) => state.userLogged);
-  const userInfo = userInfoStore((state) => state.userInfo);
+
+  if (userState) {
+    console.log("userState: ", userState);
+    localStorage.setItem("isUserLogged", true);
+  }
+
+  let storageIsUserLogged = localStorage.getItem("isUserLogged");
+  let boolStorageIsUserLogged = storageIsUserLogged === "true";
   const setUserState = userStore((state) => state.setUserState);
+
+  if (boolStorageIsUserLogged) {
+    setUserState(boolStorageIsUserLogged);
+  }
+
+  const userInfo = userInfoStore((state) => state.userInfo);
   const diarioId = diarioStore((state) => state.diarioId);
   const setDiarioId = diarioStore((state) => state.setDiarioId);
 
+  let storageUserId = localStorage.getItem("userId");
+  let storageUsername = localStorage.getItem("username");
+  let storageEmail = localStorage.getItem("email");
+
   const navigate = useNavigate();
   useEffect(() => {
+    let storageUserId = localStorage.getItem("userId");
+
     api
-      .get("/diarios/diarios")
+      .get(`diarios/diarios?userId=${storageUserId}`)
       .then((response) => {
         setNotes(response.data);
         setIsNotesEmpty(response.data.length === 0);
@@ -36,11 +55,11 @@ export const Home = () => {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-  }, []);
+  }, [storageUserId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return format(date, "yyyy-MM-dd");
+    return format(date, "dd/MM/yyyy");
   };
 
   const navigateWithParams = (param1) => {
@@ -64,26 +83,34 @@ export const Home = () => {
   };
 
   const diario = {
-    backgroundColor: "#FFFDD0",
+    backgroundColor: "#1976D2",
     padding: "10px",
-    border: "solid 1px",
     borderRadius: "10px",
     cursor: "pointer",
-    width: "200px",
+    width: "500px",
   };
 
   const diarioTitulo = {
-    fontSize: "14px",
+    fontSize: "20px",
     fontFamily: "Arial",
+    color: "white",
     fontWeight: "bold",
     textAlign: "center",
     padding: "5px",
   };
 
   let content;
-  console.log(userInfo);
-  console.log(userInfo.id);
-  if (userState === false) {
+  // console.log(userInfo);
+  // console.log(userInfo.id);
+  // console.log("User State: ", userState);
+  // console.log("Local Storage test:");
+  // console.log(storageUserId);
+  // console.log(storageUsername);
+  // console.log(storageEmail);
+
+  console.log("boolStorageIsUserLogged: ", boolStorageIsUserLogged);
+
+  if (boolStorageIsUserLogged === false) {
     content = (
       <Section>
         <div
@@ -154,6 +181,22 @@ export const Home = () => {
   } else {
     content = (
       <Section>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src="src/assets/image1.png"
+            alt="note2note logo"
+            style={{ marginBottom: "10px" }}
+          />
+          <Typography sx={{ color: "white", textAlign: "center" }} variant="h3">
+            Your Diaries
+          </Typography>
+        </div>
         <div style={diarios}>
           {notes.map((elements, index) => (
             <div
@@ -164,22 +207,34 @@ export const Home = () => {
               }}
             >
               <p style={diarioTitulo}>{elements?.diarioNome}</p>
-              <p style={{ textAlign: "center", color: "gray" }}>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Arial",
+                  color: "white",
+                }}
+              >
                 {elements?.diarioDescricao}
               </p>
-              <p style={{ textAlign: "center" }}>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Arial",
+                  color: "white",
+                }}
+              >
                 {formatDate(elements?.createdAt)}
               </p>
             </div>
           ))}
         </div>
-        <Box sx={{ "& > :not(style)": { m: 1 } }}>
-          <Fab color="primary" aria-label="add" style={buttonStyle}>
-            <Link to="/create-diary">
+        <Link to="/create-diary">
+          <Box sx={{ "& > :not(style)": { m: 1 } }}>
+            <Fab color="primary" aria-label="add" style={buttonStyle}>
               <AddIcon />
-            </Link>
-          </Fab>
-        </Box>
+            </Fab>
+          </Box>
+        </Link>
       </Section>
     );
   }

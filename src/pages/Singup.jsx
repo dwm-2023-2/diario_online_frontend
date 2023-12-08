@@ -49,7 +49,8 @@ export const Signup = () => {
       isValidName &&
       isValidEmail &&
       isValidPassword &&
-      isValidConfirmPassword
+      isValidConfirmPassword &&
+      password.trim() !== ""
     ) {
       api
         .post("/users/signup", {
@@ -62,13 +63,16 @@ export const Signup = () => {
           console.error("ops! ocorreu um erro" + err);
         });
     } else {
-      console.log("Preencha todos os campos corretamente.");
+      // console.log("Preencha todos os campos corretamente.");
     }
   };
 
-  return (
-    <div style={{ marginTop: 50 }}>
-      <HeaderLogin></HeaderLogin>
+  let storageIsUserLogged = localStorage.getItem("isUserLogged");
+  let boolStorageIsUserLogged = storageIsUserLogged === "true";
+  let content;
+
+  if (boolStorageIsUserLogged === false) {
+    content = (
       <Section>
         <div className={styles.section}>
           <Typography sx={{ color: "white" }} variant="h5">
@@ -149,6 +153,7 @@ export const Signup = () => {
                   !isValidEmail ||
                   !isValidPassword ||
                   !isValidConfirmPassword
+
                 }
               >
                 Create
@@ -166,6 +171,19 @@ export const Signup = () => {
           </div>
         </div>
       </Section>
+    );
+  } else {
+    content = (
+      <div className={styles.section}>
+        <h2>User is already logged in!</h2>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ marginTop: 50 }}>
+      <HeaderLogin></HeaderLogin>
+      <Section>{content}</Section>
       <Footer></Footer>
     </div>
   );

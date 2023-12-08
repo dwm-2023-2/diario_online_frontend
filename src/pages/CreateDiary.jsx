@@ -25,6 +25,8 @@ export const CreateDiary = () => {
 
   const [status, setStatus] = useState("Privado");
 
+  let userId = localStorage.getItem("userId");
+
   const handleChange = (event) => {
     setStatus(event.target.value);
     validateFields();
@@ -46,14 +48,16 @@ export const CreateDiary = () => {
   };
 
   const validateFields = () => {
-    const _title = title.current.value??"";
-    const _description = description.current.value??"";
+    const _title = title.current.value ?? "";
+    const _description = description.current.value ?? "";
 
     const isTitleValid = _title.trim() !== "";
     const isDescriptionValid = _description.trim() !== "";
     const isStatusValid = status.trim() !== "";
     setIsValidFields(isTitleValid && isDescriptionValid && isStatusValid);
   };
+
+  console.log(userInfoState);
 
   const submit = (ev) => {
     ev.preventDefault();
@@ -67,13 +71,13 @@ export const CreateDiary = () => {
         diarioNome: title.current.value,
         diarioDescricao: description.current.value,
         privacidade: status,
-        userId: userInfoState.id,
+        userId: userId,
       })
       .then((response) => navigate("/"))
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-    console.log(payload);
+    // console.log(payload);
   };
 
   const payload = {
@@ -81,7 +85,7 @@ export const CreateDiary = () => {
     description: description.current.value,
     status: status,
   };
-  console.log(payload);
+  // console.log(payload);
 
   return (
     <div>

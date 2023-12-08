@@ -76,7 +76,7 @@ export const CreateANote = () => {
         console.error("ops! ocorreu um erro" + err);
       });
     navigate(`/diary/${diarioId}`);
-    console.log(payload);
+    // console.log(payload);
   };
 
   return (
